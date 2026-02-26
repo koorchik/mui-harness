@@ -3,19 +3,23 @@ import { DomHarness } from 'dom-harness';
 type SwitchColor = 'default' | 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success';
 type SwitchSize = 'small' | 'medium';
 
+/** Harness for MUI `<Switch>`. Queries by `MuiSwitch-root` class. */
 export class SwitchHarness extends DomHarness {
   static selector = '.MuiSwitch-root';
 
+  /** Returns `true` if the switch is toggled on. */
   isChecked(): boolean {
     const input = this.root.querySelector('input');
     return input?.checked ?? false;
   }
 
+  /** Returns `true` if the switch is disabled. */
   isDisabled(): boolean {
     const switchBase = this.root.querySelector('.MuiSwitch-switchBase');
     return switchBase?.classList.contains('Mui-disabled') ?? false;
   }
 
+  /** Returns the switch color: `'default'`, `'primary'`, `'secondary'`, etc. */
   getColor(): SwitchColor {
     const switchBase = this.root.querySelector('.MuiSwitch-switchBase');
     if (!switchBase) return 'default';
@@ -32,16 +36,19 @@ export class SwitchHarness extends DomHarness {
     return 'default';
   }
 
+  /** Returns `'small'` or `'medium'`. */
   getSize(): SwitchSize {
     return this.root.classList.contains('MuiSwitch-sizeSmall') ? 'small' : 'medium';
   }
 
+  /** Clicks the switch input to toggle its state. */
   async toggle() {
     const input = this.root.querySelector('input');
     if (!input) throw new Error('No input found in Switch');
     await this.user.click(input);
   }
 
+  /** Returns the label text from the parent `FormControlLabel`, or `''` if none. */
   getLabel(): string {
     const label = this.root.closest('.MuiFormControlLabel-root');
     if (!label) return '';

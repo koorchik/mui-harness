@@ -27,10 +27,12 @@ The [`examples/login-page`](examples/login-page) directory contains a complete, 
 - **Tests that read like requirements.** The test files show how harnesses let you write assertions at the level of "fill in email, click submit, check for error" rather than "query a DOM node by class name."
 - **How to structure harnesses alongside components.** Each component has a co-located harness file (`LoginForm.tsx` → `LoginFormHarness.ts` → `LoginForm.test.tsx`), showing where harnesses fit in a typical project layout.
 
-## Extra documentation
+## Documentation
 
-- **[API Reference](docs/API_REFERENCE.md)** — full method tables for every harness
-- **[Best Practices](docs/BEST_PRACTICES.md)** — patterns for building app harnesses and tests
+Full API reference and best practices are included in this package:
+
+- **[API Reference](docs/API_REFERENCE.md)** — methods and signatures for all 40 harnesses
+- **[Best Practices](docs/BEST_PRACTICES.md)** — patterns for writing and composing harnesses
 
 ## Installation
 

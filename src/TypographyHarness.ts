@@ -13,17 +13,21 @@ type TypographyColor =
 
 type TypographyAlign = 'inherit' | 'left' | 'center' | 'right' | 'justify';
 
+/** Harness for MUI `<Typography>`. Queries by `MuiTypography-root` class. */
 export class TypographyHarness extends DomHarness {
   static selector = '.MuiTypography-root';
 
+  /** Finds a typography element whose text matches `textOrRegexp`. */
   static getByText(textOrRegexp: string | RegExp, container?: Element): TypographyHarness {
     return this.match(textOrRegexp, (h) => h.getText(), container);
   }
 
+  /** Returns the element's text content. */
   getText(): string {
     return this.root.textContent || '';
   }
 
+  /** Returns the typography variant: `'h1'`-`'h6'`, `'body1'`, `'caption'`, etc. */
   getVariant(): TypographyVariant {
     const classList = this.root.classList;
     
@@ -43,10 +47,12 @@ export class TypographyHarness extends DomHarness {
     return 'body1';
   }
 
+  /** Returns the rendered HTML tag name (e.g. `'p'`, `'h1'`). */
   getComponent(): string {
     return this.root.tagName.toLowerCase();
   }
 
+  /** Returns the typography color: `'primary'`, `'secondary'`, `'textPrimary'`, etc. */
   getColor(): TypographyColor {
     // Material-UI v5 uses CSS-in-JS, color information is in computed styles, not class names
     // This is a simplified approach - in practice, you might want to check data attributes 
@@ -68,6 +74,7 @@ export class TypographyHarness extends DomHarness {
     return 'inherit';
   }
 
+  /** Returns the text alignment: `'inherit'`, `'left'`, `'center'`, `'right'`, or `'justify'`. */
   getAlign(): TypographyAlign {
     const classList = this.root.classList;
     
@@ -79,10 +86,12 @@ export class TypographyHarness extends DomHarness {
     return 'inherit';
   }
 
+  /** Returns `true` if `gutterBottom` spacing is applied. */
   hasGutterBottom(): boolean {
     return this.root.classList.contains('MuiTypography-gutterBottom');
   }
 
+  /** Returns `true` if text wrapping is disabled. */
   hasNoWrap(): boolean {
     return this.root.classList.contains('MuiTypography-noWrap');
   }

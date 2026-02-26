@@ -8,9 +8,11 @@ interface Dimensions {
   height: number;
 }
 
+/** Harness for MUI `<CircularProgress>`. Queries by `MuiCircularProgress-root` class. */
 export class CircularProgressHarness extends DomHarness {
   static selector = '.MuiCircularProgress-root';
 
+  /** Returns the determinate progress value (0-100), or `null` if indeterminate. */
   getValue(): number | null {
     const circle = this._circleElement;
     if (!circle) return null;
@@ -36,6 +38,7 @@ export class CircularProgressHarness extends DomHarness {
     return this.root.querySelector('.MuiCircularProgress-circle');
   }
 
+  /** Returns `'determinate'` or `'indeterminate'`. */
   getVariant(): CircularProgressVariant {
     const classList = this.root.classList;
     
@@ -45,6 +48,7 @@ export class CircularProgressHarness extends DomHarness {
     return 'indeterminate';
   }
 
+  /** Returns the computed size in pixels. */
   getSize(): number {
     const computedStyle = window.getComputedStyle(this.root);
     const width = parseFloat(computedStyle.width);
@@ -52,6 +56,7 @@ export class CircularProgressHarness extends DomHarness {
     return width || 40;
   }
 
+  /** Returns the progress color: `'primary'`, `'secondary'`, `'inherit'`, etc. */
   getColor(): CircularProgressColor {
     const classList = this.root.classList;
     
@@ -66,6 +71,7 @@ export class CircularProgressHarness extends DomHarness {
     return 'primary';
   }
 
+  /** Returns the stroke thickness, or `null` if unavailable. */
   getThickness(): number | null {
     const svg = this._svgElement;
     const circle = this._circleElement;
@@ -76,18 +82,22 @@ export class CircularProgressHarness extends DomHarness {
     return strokeWidth ? parseFloat(strokeWidth) : 3.6;
   }
 
+  /** Returns `true` if the variant is `'indeterminate'`. */
   isIndeterminate(): boolean {
     return this.getVariant() === 'indeterminate';
   }
 
+  /** Returns `true` if the variant is `'determinate'`. */
   isDeterminate(): boolean {
     return this.getVariant() === 'determinate';
   }
 
+  /** Returns the ARIA role of the progress element. */
   getRole(): string {
     return this.root.getAttribute('role') || 'progressbar';
   }
 
+  /** Returns `true` if the SVG element is currently animating. */
   isAnimating(): boolean {
     const svg = this._svgElement;
     if (!svg) return false;
@@ -96,6 +106,7 @@ export class CircularProgressHarness extends DomHarness {
     return computedStyle.animationName !== 'none';
   }
 
+  /** Returns the computed `{ width, height }` of the progress element. */
   getDimensions(): Dimensions {
     const computedStyle = window.getComputedStyle(this.root);
     return {

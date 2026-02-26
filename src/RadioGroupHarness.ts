@@ -2,14 +2,17 @@ import { DomHarness } from 'dom-harness';
 
 type RadioOption = { label: string; value: string; disabled: boolean };
 
+/** Harness for MUI `<RadioGroup>`. Queries by `[role="radiogroup"]` attribute. */
 export class RadioGroupHarness extends DomHarness {
   static selector = '[role="radiogroup"]';
 
+  /** Returns the value of the currently selected radio, or `null` if none. */
   getSelectedValue(): string | null {
     const checked = this.root.querySelector('input[type="radio"]:checked') as HTMLInputElement | null;
     return checked?.value ?? null;
   }
 
+  /** Returns all radio options with their label, value, and disabled state. */
   getOptions(): RadioOption[] {
     const labels = this.root.querySelectorAll('.MuiFormControlLabel-root');
     return Array.from(labels).map(label => {
@@ -23,6 +26,7 @@ export class RadioGroupHarness extends DomHarness {
     });
   }
 
+  /** Clicks the radio input with the given value. Throws if not found. */
   async select(value: string) {
     const input = this.root.querySelector(`input[type="radio"][value="${value}"]`);
     if (!input) throw new Error(`Radio option with value "${value}" not found`);

@@ -8,9 +8,11 @@ interface Dimensions {
   height: number;
 }
 
+/** Harness for MUI `<SvgIcon>`. Queries by `MuiSvgIcon-root` class. */
 export class IconHarness extends DomHarness {
   static selector = '.MuiSvgIcon-root';
 
+  /** Returns the icon font size: `'inherit'`, `'small'`, `'medium'`, or `'large'`. */
   getSize(): IconSize {
     const classList = this.root.classList;
     
@@ -21,6 +23,7 @@ export class IconHarness extends DomHarness {
     return 'medium';
   }
 
+  /** Returns the icon color: `'inherit'`, `'primary'`, `'secondary'`, `'action'`, etc. */
   getColor(): IconColor {
     const classList = this.root.classList;
     
@@ -37,23 +40,28 @@ export class IconHarness extends DomHarness {
     return 'inherit';
   }
 
+  /** Returns the SVG `viewBox` attribute, or `null`. */
   getViewBox(): string | null {
     return this.root.getAttribute('viewBox');
   }
 
+  /** Returns the `aria-label` attribute, or `null`. */
   getAriaLabel(): string | null {
     return this.root.getAttribute('aria-label');
   }
 
+  /** Returns the `<title>` element's text, or `null`. */
   getTitle(): string | null {
     const titleElement = this.root.querySelector('title');
     return titleElement ? titleElement.textContent : null;
   }
 
+  /** Returns `true` if the icon has a `<title>` element. */
   hasTitle(): boolean {
     return !!this.root.querySelector('title');
   }
 
+  /** Returns the computed `{ width, height }` of the icon. */
   getDimensions(): Dimensions {
     const computedStyle = window.getComputedStyle(this.root);
     return {
@@ -62,6 +70,7 @@ export class IconHarness extends DomHarness {
     };
   }
 
+  /** Clicks the icon using UserEvent. */
   click() {
     return this.user.click(this.root);
   }

@@ -3,9 +3,11 @@ import { DomHarness } from 'dom-harness';
 type LinearProgressVariant = 'determinate' | 'indeterminate' | 'buffer' | 'query';
 type LinearProgressColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success';
 
+/** Harness for MUI `<LinearProgress>`. Queries by `MuiLinearProgress-root` class. */
 export class LinearProgressHarness extends DomHarness {
   static selector = '.MuiLinearProgress-root';
 
+  /** Returns the determinate progress value (0-100), or `null` if indeterminate. */
   getValue(): number | null {
     const progressBar = this._progressBarElement;
     if (!progressBar) return null;
@@ -25,6 +27,7 @@ export class LinearProgressHarness extends DomHarness {
     return this.root.querySelector('.MuiLinearProgress-bar');
   }
 
+  /** Returns `'determinate'`, `'indeterminate'`, `'buffer'`, or `'query'`. */
   getVariant(): LinearProgressVariant {
     const classList = this.root.classList;
     
@@ -36,6 +39,7 @@ export class LinearProgressHarness extends DomHarness {
     return 'indeterminate';
   }
 
+  /** Returns the progress color: `'primary'`, `'secondary'`, etc. */
   getColor(): LinearProgressColor {
     const classList = this.root.classList;
     
@@ -49,18 +53,22 @@ export class LinearProgressHarness extends DomHarness {
     return 'primary';
   }
 
+  /** Returns `true` if the variant is `'indeterminate'`. */
   isIndeterminate(): boolean {
     return this.getVariant() === 'indeterminate';
   }
 
+  /** Returns `true` if the variant is `'determinate'`. */
   isDeterminate(): boolean {
     return this.getVariant() === 'determinate';
   }
 
+  /** Returns `true` if the variant is `'buffer'`. */
   hasBuffer(): boolean {
     return this.getVariant() === 'buffer';
   }
 
+  /** Returns the buffer progress value (0-100), or `null` if not a buffer variant. */
   getBufferValue(): number | null {
     if (!this.hasBuffer()) return null;
     
@@ -82,10 +90,12 @@ export class LinearProgressHarness extends DomHarness {
     return this.root.querySelector('.MuiLinearProgress-bar2Buffer');
   }
 
+  /** Returns the ARIA role of the progress element. */
   getRole(): string {
     return this.root.getAttribute('role') || 'progressbar';
   }
 
+  /** Returns `true` if the progress bar is currently animating. */
   isAnimating(): boolean {
     const progressBar = this._progressBarElement;
     if (!progressBar) return false;

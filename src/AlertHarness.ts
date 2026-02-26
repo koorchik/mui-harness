@@ -5,13 +5,16 @@ import { IconButtonHarness } from './IconButtonHarness.js';
 type AlertSeverity = 'error' | 'warning' | 'info' | 'success';
 type AlertVariant = 'standard' | 'filled' | 'outlined';
 
+/** Harness for MUI `<Alert>`. Queries by `MuiAlert-root` class. */
 export class AlertHarness extends DomHarness {
   static selector = '.MuiAlert-root';
 
+  /** Finds an alert whose message text matches `textOrRegexp`. */
   static getByText(textOrRegexp: string | RegExp, container?: Element): AlertHarness {
     return this.match(textOrRegexp, (h) => h.getText(), container);
   }
 
+  /** Returns the alert message text. */
   getText(): string {
     const messageElement = this._messageElement;
     return messageElement ? messageElement.textContent || '' : this.root.textContent || '';
@@ -21,6 +24,7 @@ export class AlertHarness extends DomHarness {
     return this.root.querySelector('.MuiAlert-message');
   }
 
+  /** Returns the alert severity: `'error'`, `'warning'`, `'info'`, or `'success'`. */
   getSeverity(): AlertSeverity {
     const classList = this.root.classList;
     
@@ -40,6 +44,7 @@ export class AlertHarness extends DomHarness {
     return 'success';
   }
 
+  /** Returns the alert variant: `'standard'`, `'filled'`, or `'outlined'`. */
   getVariant(): AlertVariant {
     const classList = this.root.classList;
     
@@ -49,6 +54,7 @@ export class AlertHarness extends DomHarness {
     return 'standard';
   }
 
+  /** Returns `true` if the alert contains an icon. */
   hasIcon(): boolean {
     try {
       IconHarness.first(this.root);
@@ -58,6 +64,7 @@ export class AlertHarness extends DomHarness {
     }
   }
 
+  /** Returns the alert's `IconHarness`. Throws if no icon is present. */
   get icon(): IconHarness {
     try {
       return IconHarness.first(this.root);
@@ -66,6 +73,7 @@ export class AlertHarness extends DomHarness {
     }
   }
 
+  /** Returns `true` if the alert has a close button. */
   hasCloseButton(): boolean {
     try {
       IconButtonHarness.first(this.root);
@@ -75,6 +83,7 @@ export class AlertHarness extends DomHarness {
     }
   }
 
+  /** Returns the close `IconButtonHarness`. Throws if not present. */
   get closeButton(): IconButtonHarness {
     try {
       return IconButtonHarness.first(this.root);
@@ -83,15 +92,18 @@ export class AlertHarness extends DomHarness {
     }
   }
 
+  /** Clicks the alert's close button. */
   async clickCloseButton() {
     const closeButton = this.closeButton;
     return closeButton.click();
   }
 
+  /** Returns the ARIA role of the alert element. */
   getRole(): string {
     return this.root.getAttribute('role') || 'alert';
   }
 
+  /** Returns `true` if the alert has an action area. */
   hasAction(): boolean {
     return !!this.root.querySelector('.MuiAlert-action');
   }

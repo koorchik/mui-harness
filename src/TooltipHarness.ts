@@ -2,9 +2,11 @@ import { DomHarness } from 'dom-harness';
 
 type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 
+/** Harness for MUI `<Tooltip>`. Queries by `MuiTooltip-popper` class. */
 export class TooltipHarness extends DomHarness {
   static selector = '.MuiTooltip-popper';
 
+  /** Returns the tooltip text, or `null` if the tooltip element is absent. */
   getTitle(): string | null {
     const tooltip = this._tooltipElement;
     return tooltip ? tooltip.textContent : null;
@@ -14,6 +16,7 @@ export class TooltipHarness extends DomHarness {
     return this.root.querySelector('.MuiTooltip-tooltip');
   }
 
+  /** Returns the tooltip placement: `'top'`, `'bottom'`, `'left'`, or `'right'`. */
   getPlacement(): TooltipPlacement | null {
     if (this.root.hasAttribute('data-popper-placement')) {
       return this.root.getAttribute('data-popper-placement') as TooltipPlacement;
@@ -30,6 +33,7 @@ export class TooltipHarness extends DomHarness {
     return 'bottom';
   }
 
+  /** Returns `true` if the tooltip is visible. */
   isVisible(): boolean {
     const tooltip = this._tooltipElement;
     if (!tooltip) return false;
@@ -42,6 +46,7 @@ export class TooltipHarness extends DomHarness {
     return this.root.querySelector('.MuiTooltip-arrow');
   }
 
+  /** Returns `true` if the tooltip has an arrow element. */
   hasArrow(): boolean {
     return !!this._arrowElement;
   }

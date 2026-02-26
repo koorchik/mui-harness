@@ -3,14 +3,17 @@ import { DomHarness } from 'dom-harness';
 type BadgeColor = 'default' | 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success';
 type BadgeVariant = 'standard' | 'dot';
 
+/** Harness for MUI `<Badge>`. Queries by `MuiBadge-root` class. */
 export class BadgeHarness extends DomHarness {
   static selector = '.MuiBadge-root';
 
+  /** Returns the badge's text content. */
   getContent(): string {
     const badge = this.root.querySelector('.MuiBadge-badge');
     return badge?.textContent || '';
   }
 
+  /** Returns the badge color: `'default'`, `'primary'`, `'secondary'`, `'error'`, etc. */
   getColor(): BadgeColor {
     const badge = this.root.querySelector('.MuiBadge-badge');
     if (!badge) return 'default';
@@ -27,12 +30,14 @@ export class BadgeHarness extends DomHarness {
     return 'default';
   }
 
+  /** Returns the badge variant: `'standard'` or `'dot'`. */
   getVariant(): BadgeVariant {
     const badge = this.root.querySelector('.MuiBadge-badge');
     if (!badge) return 'standard';
     return badge.classList.contains('MuiBadge-dot') ? 'dot' : 'standard';
   }
 
+  /** Returns `true` if the badge is hidden. */
   isInvisible(): boolean {
     const badge = this.root.querySelector('.MuiBadge-badge');
     if (!badge) return true;

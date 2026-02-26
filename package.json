@@ -1,6 +1,6 @@
 {
   "name": "mui-harness",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Material UI test harness library built on dom-harness",
   "keywords": ["testing", "harness", "material-ui", "mui", "react", "test-utils"],
   "license": "MIT",
@@ -21,7 +21,7 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist", "src", "README.md"],
+  "files": ["dist", "src", "docs", "README.md"],
   "engines": { "node": ">=18" },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
