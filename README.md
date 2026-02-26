@@ -19,6 +19,14 @@ You build your UI out of `<Button>`, `<TextField>`, and `<Dialog>` — your test
 
 See the [dom-harness README](../dom-harness/README.md) for deeper background on the harness pattern.
 
+## Examples
+
+The [`examples/login-page`](examples/login-page) directory contains a complete, runnable example — a login page built with MUI components and tested entirely through harnesses. Look at it to see:
+
+- **Harness composition in practice.** A `LoginPageHarness` contains an `AuthPanelHarness`, which contains `LoginFormHarness` and `RegistrationFormHarness`. Each layer composes MUI harnesses (`TextFieldHarness`, `ButtonHarness`, etc.) to expose a domain-specific API. This is the pattern you'll use in your own apps.
+- **Tests that read like requirements.** The test files show how harnesses let you write assertions at the level of "fill in email, click submit, check for error" rather than "query a DOM node by class name."
+- **How to structure harnesses alongside components.** Each component has a co-located harness file (`LoginForm.tsx` → `LoginFormHarness.ts` → `LoginForm.test.tsx`), showing where harnesses fit in a typical project layout.
+
 ## Extra documentation
 
 - **[API Reference](docs/API_REFERENCE.md)** — full method tables for every harness
