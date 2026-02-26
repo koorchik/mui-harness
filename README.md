@@ -17,7 +17,7 @@ You build your UI out of `<Button>`, `<TextField>`, and `<Dialog>` — your test
 
 **Composition matches your mental model.** A `LoginFormHarness` contains a `TextFieldHarness` and a `ButtonHarness`, just like the component tree. Tests read the way you think about the UI, not the way a browser sees it.
 
-See the [dom-harness README](../dom-harness/README.md) for deeper background on the harness pattern.
+See the [dom-harness README](https://www.npmjs.com/package/dom-harness) for deeper background on the harness pattern.
 
 ## Examples
 
