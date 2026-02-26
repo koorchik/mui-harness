@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import { AccordionHarness } from './AccordionHarness';
+import { AccordionHarness } from './AccordionHarness.js';
 
 describe('AccordionHarness', () => {
   describe('isExpanded', () => {

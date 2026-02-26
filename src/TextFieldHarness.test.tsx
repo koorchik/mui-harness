@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 import TextField from '@mui/material/TextField';
-import { TextFieldHarness } from './TextFieldHarness';
+import { TextFieldHarness } from './TextFieldHarness.js';
 
 describe('TextFieldHarness', () => {
   it('gets value from text field with placeholder', async () => {

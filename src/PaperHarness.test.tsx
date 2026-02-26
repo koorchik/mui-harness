@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import Paper from '@mui/material/Paper';
-import { PaperHarness } from './PaperHarness';
+import { PaperHarness } from './PaperHarness.js';
 
 describe('PaperHarness', () => {
   it('finds Paper element', () => {

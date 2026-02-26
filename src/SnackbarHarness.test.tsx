@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { SnackbarHarness } from './SnackbarHarness';
+import { SnackbarHarness } from './SnackbarHarness.js';
 
 describe('SnackbarHarness', () => {
   describe('alert', () => {

@@ -4,7 +4,7 @@ import { FormControl, InputLabel, FormHelperText } from '@mui/material';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
-import { SelectHarness } from './SelectHarness';
+import { SelectHarness } from './SelectHarness.js';
 
 describe('SelectHarness', () => {
   it('gets current value from select', async () => {

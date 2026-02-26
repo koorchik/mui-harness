@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { MenuHarness } from './MenuHarness';
+import { MenuHarness } from './MenuHarness.js';
 
 describe('MenuHarness', () => {
   function renderMenu() {

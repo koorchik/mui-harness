@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import Divider from '@mui/material/Divider';
-import { DividerHarness } from './DividerHarness';
+import { DividerHarness } from './DividerHarness.js';
 
 describe('DividerHarness', () => {
   describe('getOrientation', () => {

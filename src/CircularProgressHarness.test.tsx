@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import CircularProgress from '@mui/material/CircularProgress';
-import { CircularProgressHarness } from './CircularProgressHarness';
+import { CircularProgressHarness } from './CircularProgressHarness.js';
 
 describe('CircularProgressHarness', () => {
   describe('getValue', () => {

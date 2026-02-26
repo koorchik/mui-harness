@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { CheckboxHarness } from './CheckboxHarness';
+import { CheckboxHarness } from './CheckboxHarness.js';
 
 describe('CheckboxHarness', () => {
   describe('isChecked', () => {

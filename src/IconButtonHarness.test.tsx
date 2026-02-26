@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButtonHarness } from './IconButtonHarness';
+import { IconButtonHarness } from './IconButtonHarness.js';
 
 describe('IconButtonHarness', () => {
   describe('click', () => {

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import Skeleton from '@mui/material/Skeleton';
-import { SkeletonHarness } from './SkeletonHarness';
+import { SkeletonHarness } from './SkeletonHarness.js';
 
 describe('SkeletonHarness', () => {
   describe('getVariant', () => {

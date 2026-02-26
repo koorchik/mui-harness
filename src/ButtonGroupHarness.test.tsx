@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-import { ButtonGroupHarness } from './ButtonGroupHarness';
+import { ButtonGroupHarness } from './ButtonGroupHarness.js';
 
 describe('ButtonGroupHarness', () => {
   describe('getButtons', () => {

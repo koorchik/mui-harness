@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import Link from '@mui/material/Link';
-import { LinkHarness } from './LinkHarness';
+import { LinkHarness } from './LinkHarness.js';
 
 describe('LinkHarness', () => {
   describe('getText', () => {

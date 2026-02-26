@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { TabHarness } from './TabHarness';
+import { TabHarness } from './TabHarness.js';
 
 describe('TabHarness', () => {
   describe('getLabel', () => {

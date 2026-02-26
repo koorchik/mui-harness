@@ -3,7 +3,7 @@ import { vi } from 'vitest';
 import Chip from '@mui/material/Chip';
 import Avatar from '@mui/material/Avatar';
 import FaceIcon from '@mui/icons-material/Face';
-import { ChipHarness } from './ChipHarness';
+import { ChipHarness } from './ChipHarness.js';
 
 describe('ChipHarness', () => {
   describe('getLabel', () => {

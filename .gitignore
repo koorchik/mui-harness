@@ -1,2 +1,22 @@
 node_modules/
 dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+
+# Coverage
+coverage/
+
+# TypeScript
+*.tsbuildinfo

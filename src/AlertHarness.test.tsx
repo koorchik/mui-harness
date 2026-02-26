@@ -3,7 +3,7 @@ import { vi } from 'vitest';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Button from '@mui/material/Button';
-import { AlertHarness } from './AlertHarness';
+import { AlertHarness } from './AlertHarness.js';
 
 describe('AlertHarness', () => {
   describe('getText', () => {

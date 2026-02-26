@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { TabsHarness } from './TabsHarness';
+import { TabsHarness } from './TabsHarness.js';
 
 describe('TabsHarness', () => {
   describe('getTabs', () => {

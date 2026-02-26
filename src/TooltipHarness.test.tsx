@@ -1,8 +1,8 @@
 import { render, act } from '@testing-library/react';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
-import { TooltipHarness } from './TooltipHarness';
-import { ButtonHarness } from './ButtonHarness';
+import { TooltipHarness } from './TooltipHarness.js';
+import { ButtonHarness } from './ButtonHarness.js';
 
 describe('TooltipHarness', () => {
   describe('getTitle', () => {

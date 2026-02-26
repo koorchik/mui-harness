@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { ToggleButtonHarness } from './ToggleButtonHarness';
+import { ToggleButtonHarness } from './ToggleButtonHarness.js';
 
 describe('ToggleButtonHarness', () => {
   describe('isSelected', () => {

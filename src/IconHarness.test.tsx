@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { IconHarness } from './IconHarness';
+import { IconHarness } from './IconHarness.js';
 
 describe('IconHarness', () => {
   describe('getSize', () => {

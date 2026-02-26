@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import LinearProgress from '@mui/material/LinearProgress';
-import { LinearProgressHarness } from './LinearProgressHarness';
+import { LinearProgressHarness } from './LinearProgressHarness.js';
 
 describe('LinearProgressHarness', () => {
   describe('getValue', () => {

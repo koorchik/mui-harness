@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import Drawer from '@mui/material/Drawer';
-import { DrawerHarness } from './DrawerHarness';
+import { DrawerHarness } from './DrawerHarness.js';
 
 describe('DrawerHarness', () => {
   describe('getPaperElement', () => {

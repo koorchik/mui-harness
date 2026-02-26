@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 
 import Button from '@mui/material/Button';
-import { ButtonHarness } from './ButtonHarness';
+import { ButtonHarness } from './ButtonHarness.js';
 
 describe('ButtonHarness', () => {
   describe('click', () => {

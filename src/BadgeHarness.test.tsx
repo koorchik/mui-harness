@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import Badge from '@mui/material/Badge';
-import { BadgeHarness } from './BadgeHarness';
+import { BadgeHarness } from './BadgeHarness.js';
 
 describe('BadgeHarness', () => {
   describe('getContent', () => {

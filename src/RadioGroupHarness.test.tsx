@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { RadioGroupHarness } from './RadioGroupHarness';
+import { RadioGroupHarness } from './RadioGroupHarness.js';
 
 describe('RadioGroupHarness', () => {
   function renderRadioGroup(value?: string) {

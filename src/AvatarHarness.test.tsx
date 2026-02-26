@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import Avatar from '@mui/material/Avatar';
-import { AvatarHarness } from './AvatarHarness';
+import { AvatarHarness } from './AvatarHarness.js';
 
 describe('AvatarHarness', () => {
   describe('getText', () => {

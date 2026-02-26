@@ -4,7 +4,7 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import { CardHarness } from './CardHarness';
+import { CardHarness } from './CardHarness.js';
 
 describe('CardHarness', () => {
   describe('getHeaderText', () => {

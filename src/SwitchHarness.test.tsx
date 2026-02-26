@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { SwitchHarness } from './SwitchHarness';
+import { SwitchHarness } from './SwitchHarness.js';
 
 describe('SwitchHarness', () => {
   describe('isChecked', () => {

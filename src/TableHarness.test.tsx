@@ -5,9 +5,9 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { TableContainerHarness } from './TableContainerHarness';
-import { TableRowHarness } from './TableRowHarness';
-import { TableCellHarness } from './TableCellHarness';
+import { TableContainerHarness } from './TableContainerHarness.js';
+import { TableRowHarness } from './TableRowHarness.js';
+import { TableCellHarness } from './TableCellHarness.js';
 
 function renderTable() {
   return render(

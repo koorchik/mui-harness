@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import Popover from '@mui/material/Popover';
-import { PopoverHarness } from './PopoverHarness';
+import { PopoverHarness } from './PopoverHarness.js';
 
 describe('PopoverHarness', () => {
   describe('getPaper', () => {

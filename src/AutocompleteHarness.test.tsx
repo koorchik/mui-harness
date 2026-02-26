@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { AutocompleteHarness } from './AutocompleteHarness';
+import { AutocompleteHarness } from './AutocompleteHarness.js';
 
 describe('AutocompleteHarness', () => {
   it('gets value from text field with placeholder', async () => {

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import Slider from '@mui/material/Slider';
-import { SliderHarness } from './SliderHarness';
+import { SliderHarness } from './SliderHarness.js';
 
 describe('SliderHarness', () => {
   describe('getValue', () => {

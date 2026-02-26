@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import Typography from '@mui/material/Typography';
-import { TypographyHarness } from './TypographyHarness';
+import { TypographyHarness } from './TypographyHarness.js';
 
 describe('TypographyHarness', () => {
   describe('getText', () => {

@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/Inbox';
-import { MenuItemHarness } from './MenuItemHarness';
+import { MenuItemHarness } from './MenuItemHarness.js';
 
 describe('MenuItemHarness', () => {
   describe('getText', () => {

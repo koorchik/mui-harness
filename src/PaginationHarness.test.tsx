@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import Pagination from '@mui/material/Pagination';
-import { PaginationHarness } from './PaginationHarness';
+import { PaginationHarness } from './PaginationHarness.js';
 
 describe('PaginationHarness', () => {
   describe('getPageCount', () => {
