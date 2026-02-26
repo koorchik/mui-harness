@@ -1,8 +1,15 @@
 {
   "name": "mui-harness",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Material UI test harness library built on dom-harness",
-  "keywords": ["testing", "harness", "material-ui", "mui", "react", "test-utils"],
+  "keywords": [
+    "testing",
+    "harness",
+    "material-ui",
+    "mui",
+    "react",
+    "test-utils"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -21,8 +28,15 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist", "src", "docs", "README.md"],
-  "engines": { "node": ">=18" },
+  "files": [
+    "dist",
+    "src",
+    "docs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf dist",
@@ -34,7 +48,6 @@
     "dom-harness": ">=1.0.0"
   },
   "devDependencies": {
-    "dom-harness": "file:../dom-harness",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.3.1",
@@ -44,11 +57,12 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/react": "^19.0.3",
     "@types/react-dom": "^19.0.2",
-    "@vitejs/plugin-react": "^4.3.0",
+    "@vitejs/plugin-react": "^5.1.4",
+    "dom-harness": ">=1.0.0",
     "jsdom": "^25.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "typescript": "^5.7.0",
-    "vitest": "^2.1.0"
+    "vitest": "^4.0.18"
   }
 }
