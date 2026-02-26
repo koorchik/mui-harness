@@ -11,6 +11,11 @@ A collection of test harnesses for [Material UI](https://mui.com/) components, b
 
 See the [dom-harness README](../dom-harness/README.md) for the full motivation. In short: harnesses encapsulate selectors, compose naturally, and make tests read like user interactions.
 
+## Extra documentation
+
+- **[API Reference](docs/API_REFERENCE.md)** — full method tables for every harness
+- **[Best Practices](docs/BEST_PRACTICES.md)** — patterns for building app harnesses and tests
+
 ## Installation
 
 ```bash
@@ -91,11 +96,6 @@ it('submits the form and shows a success alert', async () => {
 | `TypographyHarness` | Typography | `.MuiTypography-root` |
 
 All harnesses inherit the static methods from `DomHarness`: `first()`, `all()`, `find()`, `match()`, and `fromDomElement()`. Several also provide convenience finders like `getByText()` or `getByName()`.
-
-## Documentation
-
-- **[API Reference](docs/API_REFERENCE.md)** — full method tables for every harness
-- **[Best Practices](docs/BEST_PRACTICES.md)** — patterns for building app harnesses and tests
 
 ### Building your own harnesses
 
