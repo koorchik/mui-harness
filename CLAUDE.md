@@ -47,6 +47,10 @@ All source lives in `src/`. Flat structure — no subdirectories.
 
 **Portaled components** (Dialog, Snackbar, Menu, Popover, Drawer): These MUI components render outside the normal DOM tree, so their harness finders intentionally omit the `container` argument to search the full document.
 
+## Git
+
+- Do not add `Co-Authored-By` trailers to commits.
+
 ## Conventions
 
 - No linter/formatter configured — match existing code style (no semicolons in harness files would be wrong; the code uses semicolons)

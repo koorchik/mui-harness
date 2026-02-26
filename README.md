@@ -9,7 +9,15 @@ A collection of test harnesses for [Material UI](https://mui.com/) components, b
 
 ## Why test harnesses?
 
-See the [dom-harness README](../dom-harness/README.md) for the full motivation. In short: harnesses encapsulate selectors, compose naturally, and make tests read like user interactions.
+You build your UI out of `<Button>`, `<TextField>`, and `<Dialog>` — your tests should work at the same level of abstraction.
+
+**Same abstraction as your UI.** A harness lets you interact with a `ButtonHarness`, not a DOM node that happens to have a certain class. Tests read the way you think about the component.
+
+**Tests survive implementation changes.** A component's internal markup, class names, and DOM structure are implementation details. When MUI changes them in a minor release (and it does), tests that reach into the DOM break. Harnesses absorb that change in one place.
+
+**Composition matches your mental model.** A `LoginFormHarness` contains a `TextFieldHarness` and a `ButtonHarness`, just like the component tree. Tests read the way you think about the UI, not the way a browser sees it.
+
+See the [dom-harness README](../dom-harness/README.md) for deeper background on the harness pattern.
 
 ## Extra documentation
 
