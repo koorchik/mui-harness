@@ -31,6 +31,7 @@ The [`examples/login-page`](examples/login-page) directory contains a complete, 
 
 Full API reference and best practices are included in this package:
 
+- **[Getting Started](docs/GETTING_STARTED.md)** — what harnesses are, why they matter, and how to build your own
 - **[API Reference](docs/API_REFERENCE.md)** — methods and signatures for all 40 harnesses
 - **[Best Practices](docs/BEST_PRACTICES.md)** — patterns for writing and composing harnesses
 
