@@ -417,6 +417,7 @@ const title = TypographyHarness.first(card.root);
 | `getDisplayValue()` | `string` | Displayed value text |
 | `getName()` | `string` | Input name attribute |
 | `getLabel()` | `string` | Associated label text |
+| `isOptionDisabled(value)` | `boolean` | Whether option with given data-value is disabled (dropdown must be open) |
 | `isDisabled()` | `boolean` | Whether the select is disabled |
 | `isOpen()` | `boolean` | Whether the dropdown is open |
 | `hasError()` | `boolean` | Whether the field has an error |

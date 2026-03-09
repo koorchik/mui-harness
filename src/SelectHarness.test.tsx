@@ -138,6 +138,34 @@ describe('SelectHarness', () => {
     expect(secondSelect.getValue()).toBe('Two');
   });
 
+  it('isOptionDisabled returns true for a disabled option', async () => {
+    render(
+      <Select value="asc">
+        <MenuItem value="asc">Ascending</MenuItem>
+        <MenuItem value="desc" disabled>Descending</MenuItem>
+      </Select>
+    );
+
+    const select = SelectHarness.first();
+    await select.open();
+    expect(select.isOptionDisabled('desc')).toBe(true);
+    await select.close();
+  });
+
+  it('isOptionDisabled returns false for an enabled option', async () => {
+    render(
+      <Select value="asc">
+        <MenuItem value="asc">Ascending</MenuItem>
+        <MenuItem value="desc">Descending</MenuItem>
+      </Select>
+    );
+
+    const select = SelectHarness.first();
+    await select.open();
+    expect(select.isOptionDisabled('desc')).toBe(false);
+    await select.close();
+  });
+
   it('can get all options', async () => {
     render(
       <Select value="asc">

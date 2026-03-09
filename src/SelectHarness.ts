@@ -1,4 +1,5 @@
 import { DomHarness } from 'dom-harness';
+import { MenuItemHarness } from './MenuItemHarness.js';
 
 /** Harness for MUI `<Select>`. Queries by `MuiSelect-select` class. */
 export class SelectHarness extends DomHarness {
@@ -61,22 +62,22 @@ export class SelectHarness extends DomHarness {
     }
   }
 
-  /** Opens the dropdown and clicks the option matching the given text. */
-  async selectByText(text: string): Promise<void> {
-    await this.open();
-    // Wait a bit for the menu to open
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
-    // Find the menu popup that belongs to this select
+  private getMenuContainer(): Element {
     const selectId = this.root.getAttribute('id');
     const menuPopup = selectId ? document.querySelector(`#menu-${selectId}`) : null;
     const menuContainer = menuPopup || document.querySelector('[role="listbox"]');
-    
     if (!menuContainer) {
       throw new Error('Could not find menu container for select');
     }
-    
-    // Find the menu item with the given text within the menu container
+    return menuContainer;
+  }
+
+  /** Opens the dropdown and clicks the option matching the given text. */
+  async selectByText(text: string): Promise<void> {
+    await this.open();
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    const menuContainer = this.getMenuContainer();
     const menuItems = Array.from(menuContainer.querySelectorAll('.MuiMenuItem-root'));
     for (const item of menuItems) {
       if (item.textContent === text) {
@@ -89,19 +90,9 @@ export class SelectHarness extends DomHarness {
   /** Opens the dropdown and clicks the option with the given `data-value`. */
   async selectByValue(value: string): Promise<void> {
     await this.open();
-    // Wait a bit for the menu to open
     await new Promise(resolve => setTimeout(resolve, 100));
-    
-    // Find the menu popup that belongs to this select
-    const selectId = this.root.getAttribute('id');
-    const menuPopup = selectId ? document.querySelector(`#menu-${selectId}`) : null;
-    const menuContainer = menuPopup || document.querySelector('[role="listbox"]');
-    
-    if (!menuContainer) {
-      throw new Error('Could not find menu container for select');
-    }
-    
-    // Find the menu item with the given value within the menu container
+
+    const menuContainer = this.getMenuContainer();
     const menuItems = Array.from(menuContainer.querySelectorAll('.MuiMenuItem-root'));
     for (const item of menuItems) {
       if (item.getAttribute('data-value') === value) {
@@ -118,24 +109,25 @@ export class SelectHarness extends DomHarness {
       await this.open();
       await new Promise(resolve => setTimeout(resolve, 100));
     }
-    
-    // Find the menu popup that belongs to this select
-    const selectId = this.root.getAttribute('id');
-    const menuPopup = selectId ? document.querySelector(`#menu-${selectId}`) : null;
-    const menuContainer = menuPopup || document.querySelector('[role="listbox"]');
-    
-    if (!menuContainer) {
-      throw new Error('Could not find menu container for select');
-    }
-    
+
+    const menuContainer = this.getMenuContainer();
     const menuItems = menuContainer.querySelectorAll('.MuiMenuItem-root');
     const options = Array.from(menuItems).map(item => item.textContent || '');
-    
+
     if (!wasOpen) {
       await this.close();
     }
-    
+
     return options;
+  }
+
+  /** Returns whether the option with the given `data-value` is disabled. The dropdown must be open. */
+  isOptionDisabled(value: string): boolean {
+    const menuContainer = this.getMenuContainer();
+    const items = MenuItemHarness.all(menuContainer);
+    const item = items.find(i => i.getValue() === value);
+    if (!item) throw new Error(`Option with value "${value}" not found`);
+    return item.isDisabled();
   }
 
   /** Clicks the select element using UserEvent. */
