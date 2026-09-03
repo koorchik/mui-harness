@@ -41,7 +41,7 @@ it('submits login credentials', async () => {
 
 This works, but it's fragile:
 
-- **Coupled to MUI internals** — `.MuiInputBase-root` is an implementation detail. When MUI changes class names between versions, this test breaks even though behavior is unchanged.
+- **Coupled to MUI internals** — `.MuiInputBase-root` is an implementation detail. When MUI changes class names between versions, this test breaks even though behavior is unchanged. (A harness uses the same selector, but in exactly one place that is verified against every supported MUI version.)
 - **Verbose** — Setting up `userEvent.setup()`, casting `HTMLInputElement`, and writing CSS selectors for every field is boilerplate.
 - **Copy-pasted everywhere** — That `.MuiInputBase-root input[name="email"]` selector ends up in twenty test files. Change MUI's markup once, fix twenty files.
 

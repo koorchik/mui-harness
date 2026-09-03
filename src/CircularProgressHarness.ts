@@ -97,13 +97,9 @@ export class CircularProgressHarness extends DomHarness {
     return this.root.getAttribute('role') || 'progressbar';
   }
 
-  /** Returns `true` if the SVG element is currently animating. */
+  /** Returns `true` if the progress is animating, i.e. the variant is `'indeterminate'`. */
   isAnimating(): boolean {
-    const svg = this._svgElement;
-    if (!svg) return false;
-    
-    const computedStyle = window.getComputedStyle(svg);
-    return computedStyle.animationName !== 'none';
+    return this.isIndeterminate();
   }
 
   /** Returns the computed `{ width, height }` of the progress element. */

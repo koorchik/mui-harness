@@ -59,6 +59,18 @@ describe('CheckboxHarness', () => {
 
       expect(CheckboxHarness.first().getColor()).toBe('secondary');
     });
+
+    it('returns error color', () => {
+      render(<Checkbox color="error" />);
+
+      expect(CheckboxHarness.first().getColor()).toBe('error');
+    });
+
+    it('returns success color', () => {
+      render(<Checkbox color="success" />);
+
+      expect(CheckboxHarness.first().getColor()).toBe('success');
+    });
   });
 
   describe('getSize', () => {

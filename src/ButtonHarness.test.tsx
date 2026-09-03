@@ -2,9 +2,32 @@ import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Checkbox from '@mui/material/Checkbox';
 import { ButtonHarness } from './ButtonHarness.js';
 
 describe('ButtonHarness', () => {
+  describe('selector', () => {
+    it('matches only <Button>, not other ButtonBase components', () => {
+      render(
+        <div>
+          <Button>Real button</Button>
+          <IconButton aria-label="icon">x</IconButton>
+          <Tabs value={0}>
+            <Tab label="Tab one" />
+          </Tabs>
+          <Checkbox />
+        </div>
+      );
+
+      const buttons = ButtonHarness.all();
+      expect(buttons).toHaveLength(1);
+      expect(buttons[0].getText()).toBe('Real button');
+    });
+  });
+
   describe('click', () => {
     it('simulates click', async () => {
       const handleClick = vi.fn();

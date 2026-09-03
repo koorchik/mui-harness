@@ -2,7 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "NodeNext",
+    "inlineSources": true
   },
   "exclude": ["node_modules", "dist", "src/**/*.test.*", "src/setupTests.ts"]
 }

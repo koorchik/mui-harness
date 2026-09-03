@@ -1,5 +1,7 @@
+import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
+import { userEvent } from '@testing-library/user-event';
 import { FormControl, InputLabel, FormHelperText } from '@mui/material';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -177,7 +179,112 @@ describe('SelectHarness', () => {
 
     const select = SelectHarness.first();
     const options = await select.getOptions();
-    
+
     expect(options).toEqual(['Ascending', 'Descending', 'None']);
+  });
+
+  it('reads options from its own popup when several selects are rendered', async () => {
+    render(
+      <div>
+        <Select value="a" inputProps={{ name: 'first' }}>
+          <MenuItem value="a">First A</MenuItem>
+          <MenuItem value="b">First B</MenuItem>
+        </Select>
+        <Select value="x" inputProps={{ name: 'second' }}>
+          <MenuItem value="x">Second X</MenuItem>
+          <MenuItem value="y">Second Y</MenuItem>
+        </Select>
+      </div>
+    );
+
+    const second = SelectHarness.getByName('second');
+    expect(await second.getOptions()).toEqual(['Second X', 'Second Y']);
+
+    const first = SelectHarness.getByName('first');
+    expect(await first.getOptions()).toEqual(['First A', 'First B']);
+  });
+
+  it('throws a clear error when reading options of a closed select', () => {
+    render(
+      <Select value="a" inputProps={{ name: 'closed' }}>
+        <MenuItem value="a">A</MenuItem>
+      </Select>
+    );
+
+    expect(() => SelectHarness.first().isOptionDisabled('a')).toThrow(/not open/);
+  });
+
+  it('selects by value and reflects the new value after re-render', async () => {
+    function Controlled() {
+      const [value, setValue] = React.useState('asc');
+      return (
+        <Select value={value} onChange={(e) => setValue(e.target.value as string)}>
+          <MenuItem value="asc">Ascending</MenuItem>
+          <MenuItem value="desc">Descending</MenuItem>
+        </Select>
+      );
+    }
+    render(<Controlled />);
+
+    const select = SelectHarness.first();
+    await select.selectByValue('desc');
+
+    expect(select.getValue()).toBe('Descending');
+    expect(select.isOpen()).toBe(false);
+  });
+
+  it('finds its popup when the listbox id is overridden via MenuProps', async () => {
+    function Controlled() {
+      const [value, setValue] = React.useState('a');
+      return (
+        <Select
+          value={value}
+          onChange={(e) => setValue(e.target.value as string)}
+          MenuProps={{ slotProps: { list: { id: 'custom-listbox' } } }}
+        >
+          <MenuItem value="a">A</MenuItem>
+          <MenuItem value="b">B</MenuItem>
+        </Select>
+      );
+    }
+    render(<Controlled />);
+
+    const select = SelectHarness.first();
+    expect(await select.getOptions()).toEqual(['A', 'B']);
+    await select.selectByText('B');
+    expect(select.getValue()).toBe('B');
+  });
+
+  it('exposes option values separately from display text', async () => {
+    render(
+      <Select value={10} inputProps={{ name: 'rows' }}>
+        <MenuItem value={10}>Ten</MenuItem>
+        <MenuItem value={-1}>All</MenuItem>
+      </Select>
+    );
+
+    const select = SelectHarness.first();
+    expect(select.getValue()).toBe('Ten');
+    expect(select.getSelectedValue()).toBe('10');
+    expect(await select.getOptionValues()).toEqual(['10', '-1']);
+  });
+
+  it('uses the user-event instance assigned to the harness for option clicks', async () => {
+    render(
+      <Select value="a">
+        <MenuItem value="a">A</MenuItem>
+        <MenuItem value="b">B</MenuItem>
+      </Select>
+    );
+
+    const user = userEvent.setup();
+    const click = vi.spyOn(user, 'click');
+    const select = SelectHarness.first();
+    select.user = user;
+
+    await select.selectByText('B');
+
+    // one click to open, one on the option
+    expect(click).toHaveBeenCalledTimes(2);
   });
 });

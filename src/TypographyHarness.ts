@@ -6,11 +6,6 @@ type TypographyVariant =
   | 'body1' | 'body2'
   | 'caption' | 'overline';
 
-type TypographyColor =
-  | 'inherit' | 'primary' | 'secondary'
-  | 'textPrimary' | 'textSecondary'
-  | 'error' | 'warning' | 'info' | 'success';
-
 type TypographyAlign = 'inherit' | 'left' | 'center' | 'right' | 'justify';
 
 /** Harness for MUI `<Typography>`. Queries by `MuiTypography-root` class. */
@@ -50,28 +45,6 @@ export class TypographyHarness extends DomHarness {
   /** Returns the rendered HTML tag name (e.g. `'p'`, `'h1'`). */
   getComponent(): string {
     return this.root.tagName.toLowerCase();
-  }
-
-  /** Returns the typography color: `'primary'`, `'secondary'`, `'textPrimary'`, etc. */
-  getColor(): TypographyColor {
-    // Material-UI v5 uses CSS-in-JS, color information is in computed styles, not class names
-    // This is a simplified approach - in practice, you might want to check data attributes 
-    // or maintain a mapping if the component sets specific data attributes
-    const classList = this.root.classList;
-    
-    // Check for any color-specific classes that might exist
-    if (classList.contains('MuiTypography-colorPrimary')) return 'primary';
-    if (classList.contains('MuiTypography-colorSecondary')) return 'secondary';
-    if (classList.contains('MuiTypography-colorTextPrimary')) return 'textPrimary';
-    if (classList.contains('MuiTypography-colorTextSecondary')) return 'textSecondary';
-    if (classList.contains('MuiTypography-colorError')) return 'error';
-    if (classList.contains('MuiTypography-colorWarning')) return 'warning';
-    if (classList.contains('MuiTypography-colorInfo')) return 'info';
-    if (classList.contains('MuiTypography-colorSuccess')) return 'success';
-    
-    // Since MUI v5 uses CSS-in-JS, we cannot reliably detect color from classes
-    // Return the computed color value or 'inherit' as fallback
-    return 'inherit';
   }
 
   /** Returns the text alignment: `'inherit'`, `'left'`, `'center'`, `'right'`, or `'justify'`. */

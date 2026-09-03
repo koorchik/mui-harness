@@ -45,6 +45,18 @@ describe('SwitchHarness', () => {
 
       expect(SwitchHarness.first().getColor()).toBe('secondary');
     });
+
+    it('returns error color', () => {
+      render(<Switch color="error" />);
+
+      expect(SwitchHarness.first().getColor()).toBe('error');
+    });
+
+    it('returns success color', () => {
+      render(<Switch color="success" />);
+
+      expect(SwitchHarness.first().getColor()).toBe('success');
+    });
   });
 
   describe('getSize', () => {

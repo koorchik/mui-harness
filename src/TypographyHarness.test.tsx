@@ -63,26 +63,6 @@ describe('TypographyHarness', () => {
     });
   });
 
-  describe('getColor', () => {
-    it('returns inherit color by default', () => {
-      render(<Typography>Default text</Typography>);
-
-      expect(TypographyHarness.first().getColor()).toBe('inherit');
-    });
-
-    it('detects computed color styles', () => {
-      render(<Typography color="primary">Primary text</Typography>);
-
-      const harness = TypographyHarness.first();
-      const computedStyle = window.getComputedStyle(harness.root);
-      expect(computedStyle.color).toBeDefined();
-      expect(typeof computedStyle.color).toBe('string');
-    });
-
-    // Note: Material-UI v5 uses CSS-in-JS, so color props are not reflected in CSS class names
-    // They are applied as computed styles. For detailed color testing, check computed styles directly.
-  });
-
   describe('getAlign', () => {
     it('returns center align', () => {
       render(<Typography align="center">Centered text</Typography>);

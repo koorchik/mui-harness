@@ -22,7 +22,7 @@ export class ChipHarness extends DomHarness {
 
   /** Returns `true` if the chip is disabled. */
   isDisabled(): boolean {
-    return !!(this.root as HTMLElement).getAttribute('disabled') || this.root.classList.contains('Mui-disabled');
+    return this.root.classList.contains('Mui-disabled');
   }
 
   /** Returns `true` if the chip is clickable. */

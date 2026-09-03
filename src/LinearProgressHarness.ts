@@ -87,7 +87,8 @@ export class LinearProgressHarness extends DomHarness {
   }
 
   get _bufferBarElement(): Element | null {
-    return this.root.querySelector('.MuiLinearProgress-bar2Buffer');
+    // `bar2Buffer` is the pre-v9 class name; v9 renders the buffer bar as `bar2`.
+    return this.root.querySelector('.MuiLinearProgress-bar2Buffer, .MuiLinearProgress-bar2');
   }
 
   /** Returns the ARIA role of the progress element. */
@@ -95,12 +96,9 @@ export class LinearProgressHarness extends DomHarness {
     return this.root.getAttribute('role') || 'progressbar';
   }
 
-  /** Returns `true` if the progress bar is currently animating. */
+  /** Returns `true` if the progress bar is animating, i.e. the variant is `'indeterminate'` or `'query'`. */
   isAnimating(): boolean {
-    const progressBar = this._progressBarElement;
-    if (!progressBar) return false;
-    
-    const computedStyle = window.getComputedStyle(progressBar);
-    return computedStyle.animationName !== 'none';
+    const variant = this.getVariant();
+    return variant === 'indeterminate' || variant === 'query';
   }
 }

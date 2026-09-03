@@ -68,7 +68,7 @@ describe('TooltipHarness', () => {
         expect(tooltip.isVisible()).toBe(false);
       } catch (error) {
         // When tooltip is closed, it may not render at all, so this is expected
-        expect((error as Error).message).toMatch(/Cannot find instance of|Please add.*static testid.*or.*static selector/);
+        expect((error as Error).message).toMatch(/Cannot find instance of|No root for component|Please add.*static testid.*or.*static selector/);
       }
     });
   });

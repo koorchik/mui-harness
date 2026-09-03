@@ -17,17 +17,12 @@ export class SelectHarness extends DomHarness {
 
   /** Returns the hidden input's `name` attribute. */
   getName(): string {
-    // MUI Select stores name in a hidden input next to the select element
-    const inputBase = this.root.closest('.MuiInputBase-root');
-    const hiddenInput = inputBase?.querySelector('.MuiSelect-nativeInput') as HTMLInputElement;
-    return hiddenInput?.name || '';
+    return this._nativeInput?.name || '';
   }
 
   /** Returns the associated label text. */
   getLabel(): string {
-    // Find the label associated with this select
-    const selectRoot = this.root.closest('.MuiFormControl-root');
-    const label = selectRoot?.querySelector('.MuiInputLabel-root');
+    const label = this._formControl?.querySelector('.MuiInputLabel-root');
     return label?.textContent || '';
   }
 
@@ -40,6 +35,11 @@ export class SelectHarness extends DomHarness {
   /** Alias for `getValue()`. */
   getDisplayValue(): string {
     return this.getValue();
+  }
+
+  /** Returns the selected option's underlying value (the hidden input's `value`), as opposed to its display text. */
+  getSelectedValue(): string {
+    return this._nativeInput?.value ?? '';
   }
 
   /** Returns `true` if the select dropdown is expanded. */
@@ -62,44 +62,45 @@ export class SelectHarness extends DomHarness {
     }
   }
 
-  private getMenuContainer(): Element {
-    const selectId = this.root.getAttribute('id');
-    const menuPopup = selectId ? document.querySelector(`#menu-${selectId}`) : null;
-    const menuContainer = menuPopup || document.querySelector('[role="listbox"]');
-    if (!menuContainer) {
-      throw new Error('Could not find menu container for select');
+  /**
+   * Returns the listbox element of this select's open popup.
+   * MUI links the display element to its portaled listbox via `aria-controls` while open.
+   * If a consumer overrides the listbox id (via `MenuProps`), fall back to the open listbox in the document.
+   */
+  private getListbox(): Element {
+    if (!this.isOpen()) {
+      throw new Error('Select popup is not open. Call open() first.');
     }
-    return menuContainer;
+    const listboxId = this.root.getAttribute('aria-controls');
+    const listbox =
+      (listboxId ? document.getElementById(listboxId) : null) ?? document.querySelector('[role="listbox"]');
+    if (!listbox) {
+      throw new Error('Select popup is open but its listbox could not be found.');
+    }
+    return listbox;
   }
 
-  /** Opens the dropdown and clicks the option matching the given text. */
+  private getMenuItems(): MenuItemHarness[] {
+    return MenuItemHarness.all(this.getListbox()).map((item) => {
+      item.user = this.user;
+      return item;
+    });
+  }
+
+  /** Opens the dropdown and clicks the option matching the given text. Throws if not found. */
   async selectByText(text: string): Promise<void> {
     await this.open();
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    const menuContainer = this.getMenuContainer();
-    const menuItems = Array.from(menuContainer.querySelectorAll('.MuiMenuItem-root'));
-    for (const item of menuItems) {
-      if (item.textContent === text) {
-        await this.user.click(item as HTMLElement);
-        break;
-      }
-    }
+    const item = this.getMenuItems().find((i) => i.getText() === text);
+    if (!item) throw new Error(`Option with text "${text}" not found`);
+    await item.click();
   }
 
-  /** Opens the dropdown and clicks the option with the given `data-value`. */
+  /** Opens the dropdown and clicks the option with the given `data-value`. Throws if not found. */
   async selectByValue(value: string): Promise<void> {
     await this.open();
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    const menuContainer = this.getMenuContainer();
-    const menuItems = Array.from(menuContainer.querySelectorAll('.MuiMenuItem-root'));
-    for (const item of menuItems) {
-      if (item.getAttribute('data-value') === value) {
-        await this.user.click(item as HTMLElement);
-        break;
-      }
-    }
+    const item = this.getMenuItems().find((i) => i.getValue() === value);
+    if (!item) throw new Error(`Option with value "${value}" not found`);
+    await item.click();
   }
 
   /** Opens the dropdown (if needed), returns all option texts, then restores state. */
@@ -107,12 +108,9 @@ export class SelectHarness extends DomHarness {
     const wasOpen = this.isOpen();
     if (!wasOpen) {
       await this.open();
-      await new Promise(resolve => setTimeout(resolve, 100));
     }
 
-    const menuContainer = this.getMenuContainer();
-    const menuItems = menuContainer.querySelectorAll('.MuiMenuItem-root');
-    const options = Array.from(menuItems).map(item => item.textContent || '');
+    const options = this.getMenuItems().map((item) => item.getText());
 
     if (!wasOpen) {
       await this.close();
@@ -121,11 +119,25 @@ export class SelectHarness extends DomHarness {
     return options;
   }
 
+  /** Opens the dropdown (if needed), returns every option's `data-value`, then restores state. */
+  async getOptionValues(): Promise<string[]> {
+    const wasOpen = this.isOpen();
+    if (!wasOpen) {
+      await this.open();
+    }
+
+    const values = this.getMenuItems().map((item) => item.getValue() ?? '');
+
+    if (!wasOpen) {
+      await this.close();
+    }
+
+    return values;
+  }
+
   /** Returns whether the option with the given `data-value` is disabled. The dropdown must be open. */
   isOptionDisabled(value: string): boolean {
-    const menuContainer = this.getMenuContainer();
-    const items = MenuItemHarness.all(menuContainer);
-    const item = items.find(i => i.getValue() === value);
+    const item = this.getMenuItems().find((i) => i.getValue() === value);
     if (!item) throw new Error(`Option with value "${value}" not found`);
     return item.isDisabled();
   }
@@ -137,27 +149,38 @@ export class SelectHarness extends DomHarness {
 
   /** Returns `true` if the select is disabled. */
   isDisabled(): boolean {
-    return this.root.classList.contains('Mui-disabled');
+    return (
+      this.root.classList.contains('Mui-disabled') ||
+      !!this._inputBase?.classList.contains('Mui-disabled')
+    );
   }
 
   /** Returns `true` if the select or its form control has an error state. */
   hasError(): boolean {
-    // Check if the select itself has error state
-    const selectRoot = this.root.closest('.MuiInputBase-root');
-    if (selectRoot?.classList.contains('Mui-error')) {
+    if (this._inputBase?.classList.contains('Mui-error')) {
       return true;
     }
-    
+
     // Also check if there's an error helper text
-    const formControl = this.root.closest('.MuiFormControl-root');
-    const helperText = formControl?.querySelector('.MuiFormHelperText-root.Mui-error');
-    return !!helperText;
+    return !!this._formControl?.querySelector('.MuiFormHelperText-root.Mui-error');
   }
 
   /** Returns the helper text below the select, or `null` if absent. */
   getHelperText(): string | null {
-    const formControl = this.root.closest('.MuiFormControl-root');
-    const helperText = formControl?.querySelector('.MuiFormHelperText-root');
+    const helperText = this._formControl?.querySelector('.MuiFormHelperText-root');
     return helperText?.textContent || null;
+  }
+
+  private get _inputBase(): Element | null {
+    return this.root.closest('.MuiInputBase-root');
+  }
+
+  /** MUI Select stores name and value in a hidden input next to the display element. */
+  private get _nativeInput(): HTMLInputElement | null {
+    return this._inputBase?.querySelector<HTMLInputElement>('.MuiSelect-nativeInput') ?? null;
+  }
+
+  private get _formControl(): Element | null {
+    return this.root.closest('.MuiFormControl-root');
   }
 }

@@ -1,5 +1,6 @@
 # mui-harness
 
+[![CI](https://github.com/koorchik/mui-harness/actions/workflows/ci.yml/badge.svg)](https://github.com/koorchik/mui-harness/actions/workflows/ci.yml)
 [![npm version](https://badge.fury.io/js/mui-harness.svg)](https://badge.fury.io/js/mui-harness)
 [![npm downloads](https://img.shields.io/npm/dm/mui-harness.svg)](https://www.npmjs.com/package/mui-harness)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
@@ -32,7 +33,7 @@ The [`examples/login-page`](examples/login-page) directory contains a complete, 
 Full API reference and best practices are included in this package:
 
 - **[Getting Started](docs/GETTING_STARTED.md)** — what harnesses are, why they matter, and how to build your own
-- **[API Reference](docs/API_REFERENCE.md)** — methods and signatures for all 40 harnesses
+- **[API Reference](docs/API_REFERENCE.md)** — methods and signatures for all 48 harnesses
 - **[Best Practices](docs/BEST_PRACTICES.md)** — patterns for writing and composing harnesses
 
 ## Installation
@@ -45,11 +46,11 @@ npm install mui-harness dom-harness
 
 | Package | Version |
 |---|---|
-| `dom-harness` | `*` |
-| `@mui/material` | `^6.0.0` |
-| `@testing-library/react` | `>=16.0.0` |
+| `dom-harness` | `^1.2.0` |
+| `@mui/material` | `^6.0.0 \|\| ^7.0.0 \|\| ^9.0.0` |
 | `@testing-library/user-event` | `>=14.0.0` |
-| `react` | `>=19.0.0` |
+
+`react`, `react-dom` and `@emotion/*` come in through `@mui/material`'s own peer dependencies. The test suite runs against MUI 6, 7 and 9 in CI (`npm run test:matrix` runs the same matrix locally). Node 20 or newer is required.
 
 ## Quick start
 
@@ -75,12 +76,13 @@ it('submits the form and shows a success alert', async () => {
 |---|---|---|
 | `AccordionHarness` | Accordion | `.MuiAccordion-root` |
 | `AlertHarness` | Alert | `.MuiAlert-root` |
+| `AppBarHarness` | AppBar | `.MuiAppBar-root` |
 | `AutocompleteHarness` | Autocomplete | `.MuiAutocomplete-inputRoot` |
 | `AvatarHarness` | Avatar | `.MuiAvatar-root` |
 | `BadgeHarness` | Badge | `.MuiBadge-root` |
 | `BreadcrumbsHarness` | Breadcrumbs | `.MuiBreadcrumbs-root` |
 | `ButtonGroupHarness` | ButtonGroup | `.MuiButtonGroup-root` |
-| `ButtonHarness` | Button | `.MuiButtonBase-root` |
+| `ButtonHarness` | Button | `.MuiButton-root` |
 | `CardHarness` | Card | `.MuiCard-root` |
 | `CheckboxHarness` | Checkbox | `.MuiCheckbox-root` |
 | `ChipHarness` | Chip | `.MuiChip-root` |
@@ -88,6 +90,7 @@ it('submits the form and shows a success alert', async () => {
 | `DialogHarness` | Dialog | `.MuiDialog-root` |
 | `DividerHarness` | Divider | `.MuiDivider-root` |
 | `DrawerHarness` | Drawer | `.MuiDrawer-root` |
+| `FabHarness` | Fab | `.MuiFab-root` |
 | `IconButtonHarness` | IconButton | `.MuiIconButton-root` |
 | `IconHarness` | SvgIcon | `.MuiSvgIcon-root` |
 | `LinearProgressHarness` | LinearProgress | `.MuiLinearProgress-root` |
@@ -99,18 +102,24 @@ it('submits the form and shows a success alert', async () => {
 | `PaperHarness` | Paper | `.MuiPaper-root` |
 | `PopoverHarness` | Popover | `.MuiPopover-root` |
 | `RadioGroupHarness` | RadioGroup | `[role="radiogroup"]` |
+| `RatingHarness` | Rating | `.MuiRating-root` |
 | `SelectHarness` | Select | `.MuiSelect-select` |
 | `SkeletonHarness` | Skeleton | `.MuiSkeleton-root` |
 | `SliderHarness` | Slider | `.MuiSlider-root` |
 | `SnackbarHarness` | Snackbar | `.MuiSnackbar-root` |
+| `StepHarness` | Step | `.MuiStep-root` |
+| `StepperHarness` | Stepper | `.MuiStepper-root` |
 | `SwitchHarness` | Switch | `.MuiSwitch-root` |
 | `TabHarness` | Tab | `.MuiTab-root` |
 | `TableCellHarness` | TableCell | `.MuiTableCell-root` |
 | `TableContainerHarness` | TableContainer | `.MuiTableContainer-root` |
+| `TablePaginationHarness` | TablePagination | `.MuiTablePagination-root` |
 | `TableRowHarness` | TableRow | `.MuiTableRow-root` |
 | `TabsHarness` | Tabs | `.MuiTabs-root` |
 | `TextFieldHarness` | TextField | `.MuiInputBase-root` |
+| `ToggleButtonGroupHarness` | ToggleButtonGroup | `.MuiToggleButtonGroup-root` |
 | `ToggleButtonHarness` | ToggleButton | `.MuiToggleButton-root` |
+| `ToolbarHarness` | Toolbar | `.MuiToolbar-root` |
 | `TooltipHarness` | Tooltip | `.MuiTooltip-popper` |
 | `TypographyHarness` | Typography | `.MuiTypography-root` |
 

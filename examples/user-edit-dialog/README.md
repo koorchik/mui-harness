@@ -25,7 +25,10 @@ UserEditDialog/
 
 ## Running
 
+The example links `mui-harness` from the repository root (`file:../../`), so build it first:
+
 ```bash
+(cd ../.. && npm install && npm run build)
 npm install
 npm start         # dev server
 npm run test:run  # single run

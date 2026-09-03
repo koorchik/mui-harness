@@ -38,12 +38,13 @@ All harnesses extend `DomHarness` from `dom-harness`. Every harness inherits the
 |---|---|---|---|
 | [AccordionHarness](#accordionharness) | Accordion | `.MuiAccordion-root` | — |
 | [AlertHarness](#alertharness) | Alert | `.MuiAlert-root` | `getByText()` |
+| [AppBarHarness](#appbarharness) | AppBar | `.MuiAppBar-root` | — |
 | [AutocompleteHarness](#autocompleteharness) | Autocomplete | `.MuiAutocomplete-inputRoot` | `getByName()` |
 | [AvatarHarness](#avatarharness) | Avatar | `.MuiAvatar-root` | — |
 | [BadgeHarness](#badgeharness) | Badge | `.MuiBadge-root` | — |
 | [BreadcrumbsHarness](#breadcrumbsharness) | Breadcrumbs | `.MuiBreadcrumbs-root` | — |
 | [ButtonGroupHarness](#buttongroupharness) | ButtonGroup | `.MuiButtonGroup-root` | — |
-| [ButtonHarness](#buttonharness) | Button | `.MuiButtonBase-root` | `getByText()` |
+| [ButtonHarness](#buttonharness) | Button | `.MuiButton-root` | `getByText()` |
 | [CardHarness](#cardharness) | Card | `.MuiCard-root` | — |
 | [CheckboxHarness](#checkboxharness) | Checkbox | `.MuiCheckbox-root` | — |
 | [ChipHarness](#chipharness) | Chip | `.MuiChip-root` | `getByText()` |
@@ -51,6 +52,7 @@ All harnesses extend `DomHarness` from `dom-harness`. Every harness inherits the
 | [DialogHarness](#dialogharness) | Dialog | `.MuiDialog-root` | — |
 | [DividerHarness](#dividerharness) | Divider | `.MuiDivider-root` | — |
 | [DrawerHarness](#drawerharness) | Drawer | `.MuiDrawer-root` | — |
+| [FabHarness](#fabharness) | Fab | `.MuiFab-root` | `getByText()`, `getByLabel()` |
 | [IconButtonHarness](#iconbuttonharness) | IconButton | `.MuiIconButton-root` | — |
 | [IconHarness](#iconharness) | SvgIcon | `.MuiSvgIcon-root` | — |
 | [LinearProgressHarness](#linearprogressharness) | LinearProgress | `.MuiLinearProgress-root` | — |
@@ -62,18 +64,24 @@ All harnesses extend `DomHarness` from `dom-harness`. Every harness inherits the
 | [PaperHarness](#paperharness) | Paper | `.MuiPaper-root` | — |
 | [PopoverHarness](#popoverharness) | Popover | `.MuiPopover-root` | — |
 | [RadioGroupHarness](#radiogroupharness) | RadioGroup | `[role="radiogroup"]` | — |
+| [RatingHarness](#ratingharness) | Rating | `.MuiRating-root` | `getByName()` |
 | [SelectHarness](#selectharness) | Select | `.MuiSelect-select` | `getByName()`, `getByLabel()` |
 | [SkeletonHarness](#skeletonharness) | Skeleton | `.MuiSkeleton-root` | — |
 | [SliderHarness](#sliderharness) | Slider | `.MuiSlider-root` | — |
 | [SnackbarHarness](#snackbarharness) | Snackbar | `.MuiSnackbar-root` | — |
+| [StepHarness](#stepharness) | Step | `.MuiStep-root` | `getByLabel()` |
+| [StepperHarness](#stepperharness) | Stepper | `.MuiStepper-root` | — |
 | [SwitchHarness](#switchharness) | Switch | `.MuiSwitch-root` | — |
 | [TabHarness](#tabharness) | Tab | `.MuiTab-root` | — |
 | [TableCellHarness](#tablecellharness) | TableCell | `.MuiTableCell-root` | — |
 | [TableContainerHarness](#tablecontainerharness) | TableContainer | `.MuiTableContainer-root` | — |
+| [TablePaginationHarness](#tablepaginationharness) | TablePagination | `.MuiTablePagination-root` | — |
 | [TableRowHarness](#tablerowharness) | TableRow | `.MuiTableRow-root` | — |
 | [TabsHarness](#tabsharness) | Tabs | `.MuiTabs-root` | — |
 | [TextFieldHarness](#textfieldharness) | TextField | `.MuiInputBase-root` | `getByName()` |
+| [ToggleButtonGroupHarness](#togglebuttongroupharness) | ToggleButtonGroup | `.MuiToggleButtonGroup-root` | — |
 | [ToggleButtonHarness](#togglebuttonharness) | ToggleButton | `.MuiToggleButton-root` | — |
+| [ToolbarHarness](#toolbarharness) | Toolbar | `.MuiToolbar-root` | — |
 | [TooltipHarness](#tooltipharness) | Tooltip | `.MuiTooltip-popper` | — |
 | [TypographyHarness](#typographyharness) | Typography | `.MuiTypography-root` | `getByText()` |
 
@@ -107,6 +115,19 @@ All harnesses extend `DomHarness` from `dom-harness`. Every harness inherits the
 | `getRole()` | `string` | ARIA role attribute |
 | `icon` | `IconHarness` | **Getter** — nested icon |
 | `closeButton` | `IconButtonHarness` | **Getter** — nested close button |
+
+## AppBarHarness
+
+**Selector:** `.MuiAppBar-root` · **Extends:** DomHarness
+
+| Method | Returns | Description |
+|---|---|---|
+| `getPosition()` | `string` | `'fixed'`, `'absolute'`, `'sticky'`, `'static'` or `'relative'` |
+| `getColor()` | `string` | App bar color (`'primary'` by default) |
+| `hasToolbar()` | `boolean` | Whether a `<Toolbar>` is rendered inside |
+| `toolbar` | `ToolbarHarness` | The contained toolbar (throws if absent) |
+| `getTitle()` | `string \| null` | Text of the first `<Typography>` inside |
+| `getText()` | `string` | Full text content |
 
 ## AutocompleteHarness
 
@@ -159,7 +180,7 @@ Inherits all methods from [TextFieldHarness](#textfieldharness).
 
 ## ButtonHarness
 
-**Selector:** `.MuiButtonBase-root` · **Extends:** DomHarness
+**Selector:** `.MuiButton-root` · **Extends:** DomHarness
 
 | Method | Returns | Description |
 |---|---|---|
@@ -261,6 +282,22 @@ Inherits all methods from [TextFieldHarness](#textfieldharness).
 |---|---|---|
 | `getPaperElement()` | `HTMLElement \| null` | Drawer paper container |
 | `getWidth()` | `string \| null` | Drawer width |
+
+## FabHarness
+
+**Selector:** `.MuiFab-root` · **Extends:** DomHarness
+
+| Method | Returns | Description |
+|---|---|---|
+| `getByText(text, container?)` | `FabHarness` | **Static** — find by text or regex |
+| `getByLabel(label, container?)` | `FabHarness` | **Static** — find by `aria-label` or regex |
+| `getText()` | `string` | Text content |
+| `getLabel()` | `string` | `aria-label` attribute |
+| `getVariant()` | `string` | `'circular'` or `'extended'` |
+| `getSize()` | `string` | `'small'`, `'medium'` or `'large'` |
+| `getColor()` | `string` | Fab color (`'default'` when unset) |
+| `isDisabled()` | `boolean` | Whether the fab is disabled |
+| `click()` | `Promise<void>` | Click the fab |
 
 ## IconButtonHarness
 
@@ -400,6 +437,20 @@ const title = TypographyHarness.first(card.root);
 | `getOptions()` | `{ label, value, disabled }[]` | All radio options |
 | `select(value)` | `Promise<void>` | Select a radio by value |
 
+## RatingHarness
+
+**Selector:** `.MuiRating-root` · **Extends:** DomHarness
+
+| Method | Returns | Description |
+|---|---|---|
+| `getByName(name, container?)` | `RatingHarness` | **Static** — find by radio input name or regex |
+| `getName()` | `string` | Radio input name (`''` for read-only ratings) |
+| `getValue()` | `number \| null` | Current value, `null` when nothing is selected |
+| `getMax()` | `number` | Number of icons |
+| `isReadOnly()` | `boolean` | Whether the rating is read-only |
+| `isDisabled()` | `boolean` | Whether the rating is disabled |
+| `setValue(value)` | `Promise<void>` | Click the icon for `value` (throws if out of range) |
+
 ## SelectHarness
 
 **Selector:** `.MuiSelect-select` · **Extends:** DomHarness
@@ -410,11 +461,13 @@ const title = TypographyHarness.first(card.root);
 | `getByLabel(label, container?)` | `SelectHarness` | **Static** — find by label or regex |
 | `open()` | `Promise<void>` | Open the dropdown |
 | `close()` | `Promise<void>` | Close the dropdown |
-| `selectByText(text)` | `Promise<void>` | Select an option by display text |
-| `selectByValue(value)` | `Promise<void>` | Select an option by data-value |
-| `getOptions()` | `Promise<string[]>` | All option labels |
+| `selectByText(text)` | `Promise<void>` | Select an option by display text (throws if not found) |
+| `selectByValue(value)` | `Promise<void>` | Select an option by data-value (throws if not found) |
+| `getOptions()` | `Promise<string[]>` | All option labels (opens and closes the dropdown if needed) |
+| `getOptionValues()` | `Promise<string[]>` | All option `data-value`s (opens and closes the dropdown if needed) |
 | `getValue()` | `string` | Currently displayed value |
 | `getDisplayValue()` | `string` | Displayed value text |
+| `getSelectedValue()` | `string` | Selected option's underlying value (hidden input) |
 | `getName()` | `string` | Input name attribute |
 | `getLabel()` | `string` | Associated label text |
 | `isOptionDisabled(value)` | `boolean` | Whether option with given data-value is disabled (dropdown must be open) |
@@ -453,6 +506,36 @@ const title = TypographyHarness.first(card.root);
 | `getText()` | `string` | Snackbar message text |
 | `getSeverity()` | `string` | Alert severity (delegates to inner alert) |
 | `alert` | `AlertHarness` | **Getter** — nested alert |
+
+## StepHarness
+
+**Selector:** `.MuiStep-root` · **Extends:** DomHarness
+
+State is read from the step's `StepLabel`.
+
+| Method | Returns | Description |
+|---|---|---|
+| `getByLabel(label, container?)` | `StepHarness` | **Static** — find by label text or regex |
+| `getLabel()` | `string` | Step label text |
+| `isActive()` | `boolean` | Whether this is the active step |
+| `isCompleted()` | `boolean` | Whether the step is completed |
+| `isDisabled()` | `boolean` | Whether the step is disabled |
+| `hasError()` | `boolean` | Whether the label is in the error state |
+| `isClickable()` | `boolean` | Whether the step renders a `StepButton` |
+| `click()` | `Promise<void>` | Click the `StepButton` (throws if absent) |
+
+## StepperHarness
+
+**Selector:** `.MuiStepper-root` · **Extends:** DomHarness
+
+| Method | Returns | Description |
+|---|---|---|
+| `getSteps()` | `StepHarness[]` | All steps |
+| `getStepLabels()` | `string[]` | Label of every step |
+| `getStep(index)` | `StepHarness` | Step at index (throws if out of bounds) |
+| `getActiveIndex()` | `number` | Index of the active step, `-1` if none |
+| `getActiveLabel()` | `string \| null` | Label of the active step |
+| `getOrientation()` | `string` | `'horizontal'` or `'vertical'` |
 
 ## SwitchHarness
 
@@ -495,6 +578,23 @@ const title = TypographyHarness.first(card.root);
 | `getRows()` | `TableRowHarness[]` | All table rows |
 | `getRowCount()` | `number` | Number of rows |
 
+## TablePaginationHarness
+
+**Selector:** `.MuiTablePagination-root` · **Extends:** DomHarness
+
+| Method | Returns | Description |
+|---|---|---|
+| `getDisplayedRows()` | `string` | Displayed rows text, e.g. `'1–10 of 100'` |
+| `getRowsPerPage()` | `number` | Current rows-per-page value |
+| `getRowsPerPageOptions()` | `Promise<number[]>` | Available rows-per-page options |
+| `setRowsPerPage(value)` | `Promise<void>` | Select a rows-per-page value (matches by value, so `{ label, value }` options work) |
+| `hasRowsPerPageSelect()` | `boolean` | Whether the rows-per-page select is rendered |
+| `rowsPerPageSelect` | `SelectHarness` | The rows-per-page select (throws if absent) |
+| `goToNext()` | `Promise<void>` | Click the next-page button (locale independent) |
+| `goToPrevious()` | `Promise<void>` | Click the previous-page button (locale independent) |
+| `isNextDisabled()` | `boolean` | Whether the next button is disabled |
+| `isPreviousDisabled()` | `boolean` | Whether the previous button is disabled |
+
 ## TableRowHarness
 
 **Selector:** `.MuiTableRow-root` · **Extends:** DomHarness
@@ -529,6 +629,21 @@ const title = TypographyHarness.first(card.root);
 | `getPlaceholder()` | `string` | Placeholder text |
 | `getType()` | `string` | Input type attribute |
 
+## ToggleButtonGroupHarness
+
+**Selector:** `.MuiToggleButtonGroup-root` · **Extends:** DomHarness
+
+| Method | Returns | Description |
+|---|---|---|
+| `getButtons()` | `ToggleButtonHarness[]` | All buttons in the group |
+| `getButton(value)` | `ToggleButtonHarness` | Button with the given value (throws if absent) |
+| `getValues()` | `string[]` | Value of every button |
+| `getSelectedValues()` | `string[]` | Values of all selected buttons |
+| `getSelectedValue()` | `string \| null` | Selected value of an exclusive group |
+| `select(value)` | `Promise<void>` | Click the button with the given value |
+| `getOrientation()` | `string` | `'horizontal'` or `'vertical'` |
+| `isDisabled()` | `boolean` | Whether every button is disabled |
+
 ## ToggleButtonHarness
 
 **Selector:** `.MuiToggleButton-root` · **Extends:** DomHarness
@@ -540,6 +655,16 @@ const title = TypographyHarness.first(card.root);
 | `getValue()` | `string` | Button value attribute |
 | `getText()` | `string` | Button text content |
 | `click()` | `Promise<void>` | Click the button |
+
+## ToolbarHarness
+
+**Selector:** `.MuiToolbar-root` · **Extends:** DomHarness
+
+| Method | Returns | Description |
+|---|---|---|
+| `getText()` | `string` | Full text content |
+| `getVariant()` | `string` | `'regular'` or `'dense'` |
+| `hasGutters()` | `boolean` | Whether horizontal gutters are applied |
 
 ## TooltipHarness
 
@@ -561,7 +686,6 @@ const title = TypographyHarness.first(card.root);
 | `getByText(text, container?)` | `TypographyHarness` | **Static** — find by text or regex |
 | `getText()` | `string` | Text content |
 | `getVariant()` | `string` | Typography variant (h1–h6, body1, etc.) |
-| `getColor()` | `string` | Typography color |
 | `getAlign()` | `string` | Text alignment |
 | `getComponent()` | `string` | HTML tag name |
 | `hasGutterBottom()` | `boolean` | Whether gutter bottom is applied |

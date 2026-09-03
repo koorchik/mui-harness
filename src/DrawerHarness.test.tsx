@@ -16,9 +16,9 @@ describe('DrawerHarness', () => {
   });
 
   describe('getWidth', () => {
-    it('returns width when set via PaperProps style', () => {
+    it('returns width when set via paper slot style', () => {
       render(
-        <Drawer open PaperProps={{ style: { width: '300px' } }}>
+        <Drawer open slotProps={{ paper: { style: { width: '300px' } } }}>
           <div>Drawer content</div>
         </Drawer>
       );

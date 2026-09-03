@@ -27,7 +27,12 @@ export class AlertHarness extends DomHarness {
   /** Returns the alert severity: `'error'`, `'warning'`, `'info'`, or `'success'`. */
   getSeverity(): AlertSeverity {
     const classList = this.root.classList;
-    
+
+    // MUI v6+ emits `MuiAlert-color{Severity}`; the `{variant}{Severity}` combos below are the legacy names.
+    if (classList.contains('MuiAlert-colorError')) return 'error';
+    if (classList.contains('MuiAlert-colorWarning')) return 'warning';
+    if (classList.contains('MuiAlert-colorInfo')) return 'info';
+    if (classList.contains('MuiAlert-colorSuccess')) return 'success';
     if (classList.contains('MuiAlert-standardError')) return 'error';
     if (classList.contains('MuiAlert-standardWarning')) return 'warning';
     if (classList.contains('MuiAlert-standardInfo')) return 'info';

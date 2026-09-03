@@ -1,8 +1,8 @@
 import { DomHarness } from 'dom-harness';
 
-/** Harness for MUI `<Button>`. Queries by `MuiButtonBase-root` class. */
+/** Harness for MUI `<Button>`. Queries by `MuiButton-root` class. */
 export class ButtonHarness extends DomHarness {
-  static selector = '.MuiButtonBase-root';
+  static selector = '.MuiButton-root';
 
   /** Finds a button whose text content matches `textOrRegexp`. */
   static getByText(textOrRegexp: string | RegExp, container?: Element): ButtonHarness {
