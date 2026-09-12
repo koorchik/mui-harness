@@ -63,6 +63,90 @@ describe('ButtonHarness', () => {
     });
   });
 
+  describe('getVariant', () => {
+    it('returns text by default', () => {
+      render(<Button>Hello</Button>);
+
+      expect(ButtonHarness.first().getVariant()).toBe('text');
+    });
+
+    it('returns outlined', () => {
+      render(<Button variant="outlined">Hello</Button>);
+
+      expect(ButtonHarness.first().getVariant()).toBe('outlined');
+    });
+
+    it('returns contained', () => {
+      render(<Button variant="contained">Hello</Button>);
+
+      expect(ButtonHarness.first().getVariant()).toBe('contained');
+    });
+  });
+
+  describe('getColor', () => {
+    it('returns primary by default', () => {
+      render(<Button>Hello</Button>);
+
+      expect(ButtonHarness.first().getColor()).toBe('primary');
+    });
+
+    it('returns inherit', () => {
+      render(<Button color="inherit">Hello</Button>);
+
+      expect(ButtonHarness.first().getColor()).toBe('inherit');
+    });
+
+    it('returns secondary for a text button', () => {
+      render(<Button color="secondary">Hello</Button>);
+
+      expect(ButtonHarness.first().getColor()).toBe('secondary');
+    });
+
+    it('returns error for an outlined button', () => {
+      render(<Button variant="outlined" color="error">Hello</Button>);
+
+      expect(ButtonHarness.first().getColor()).toBe('error');
+    });
+
+    it('returns success for a contained button', () => {
+      render(<Button variant="contained" color="success">Hello</Button>);
+
+      expect(ButtonHarness.first().getColor()).toBe('success');
+    });
+
+    it('returns warning and info', () => {
+      render(
+        <div>
+          <Button color="warning">Warn</Button>
+          <Button color="info">Info</Button>
+        </div>
+      );
+
+      expect(ButtonHarness.getByText('Warn').getColor()).toBe('warning');
+      expect(ButtonHarness.getByText('Info').getColor()).toBe('info');
+    });
+  });
+
+  describe('getSize', () => {
+    it('returns the explicit size', () => {
+      render(
+        <div>
+          <Button size="small">Small</Button>
+          <Button size="large">Large</Button>
+        </div>
+      );
+
+      expect(ButtonHarness.getByText('Small').getSize()).toBe('small');
+      expect(ButtonHarness.getByText('Large').getSize()).toBe('large');
+    });
+
+    it('defaults to medium', () => {
+      render(<Button>Default</Button>);
+
+      expect(ButtonHarness.first().getSize()).toBe('medium');
+    });
+  });
+
   describe('static getByText', () => {
     it('finds element by text', async () => {
       render(<Button>Hello</Button>);
@@ -81,5 +165,16 @@ describe('ButtonHarness', () => {
 
       expect(() => ButtonHarness.getByText('Wrong text')).toThrow();
     });
+  });
+
+  it('keeps the subclass type in static finders', () => {
+    class SubmitButtonHarness extends ButtonHarness {}
+
+    render(<Button>Submit</Button>);
+
+    const button: SubmitButtonHarness = SubmitButtonHarness.getByText('Submit');
+
+    expect(button).toBeInstanceOf(SubmitButtonHarness);
+    expect(button.getText()).toBe('Submit');
   });
 });

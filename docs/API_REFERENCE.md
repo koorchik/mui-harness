@@ -21,6 +21,9 @@ All harnesses extend `DomHarness` from `dom-harness`. Every harness inherits the
 | `match(textOrRegexp, getText, container?)` | `T` | First element whose `getText` result matches (throws if none) |
 | `fromDomElement(root?)` | `T` | Wrap an existing DOM element |
 
+All static finders — these and every harness-specific `getByText()` / `getByName()` / `getByLabel()` below — are
+typed on the calling class, so a subclass (`class SubmitButton extends ButtonHarness {}`) gets back its own type.
+
 ### Instance Members
 
 | Member | Type | Description |
@@ -46,9 +49,10 @@ All harnesses extend `DomHarness` from `dom-harness`. Every harness inherits the
 | [ButtonGroupHarness](#buttongroupharness) | ButtonGroup | `.MuiButtonGroup-root` | — |
 | [ButtonHarness](#buttonharness) | Button | `.MuiButton-root` | `getByText()` |
 | [CardHarness](#cardharness) | Card | `.MuiCard-root` | — |
-| [CheckboxHarness](#checkboxharness) | Checkbox | `.MuiCheckbox-root` | — |
+| [CheckboxHarness](#checkboxharness) | Checkbox | `.MuiCheckbox-root` | `getByName()`, `getByLabel()` |
 | [ChipHarness](#chipharness) | Chip | `.MuiChip-root` | `getByText()` |
 | [CircularProgressHarness](#circularprogressharness) | CircularProgress | `.MuiCircularProgress-root` | — |
+| [CollapseHarness](#collapseharness) | Collapse | `.MuiCollapse-root` | `getByText()` |
 | [DialogHarness](#dialogharness) | Dialog | `.MuiDialog-root` | — |
 | [DividerHarness](#dividerharness) | Divider | `.MuiDivider-root` | — |
 | [DrawerHarness](#drawerharness) | Drawer | `.MuiDrawer-root` | — |
@@ -58,6 +62,7 @@ All harnesses extend `DomHarness` from `dom-harness`. Every harness inherits the
 | [LinearProgressHarness](#linearprogressharness) | LinearProgress | `.MuiLinearProgress-root` | — |
 | [LinkHarness](#linkharness) | Link | `.MuiLink-root` | — |
 | [ListItemHarness](#listitemharness) | ListItem | `.MuiListItem-root, .MuiListItemButton-root` | — |
+| [ListSubheaderHarness](#listsubheaderharness) | ListSubheader | `.MuiListSubheader-root` | `getByText()` |
 | [MenuHarness](#menuharness) | Menu | `.MuiMenu-root` | — |
 | [MenuItemHarness](#menuitemharness) | MenuItem | `.MuiMenuItem-root` | `getByText()` |
 | [PaginationHarness](#paginationharness) | Pagination | `.MuiPagination-root` | — |
@@ -71,14 +76,16 @@ All harnesses extend `DomHarness` from `dom-harness`. Every harness inherits the
 | [SnackbarHarness](#snackbarharness) | Snackbar | `.MuiSnackbar-root` | — |
 | [StepHarness](#stepharness) | Step | `.MuiStep-root` | `getByLabel()` |
 | [StepperHarness](#stepperharness) | Stepper | `.MuiStepper-root` | — |
-| [SwitchHarness](#switchharness) | Switch | `.MuiSwitch-root` | — |
+| [SwitchHarness](#switchharness) | Switch | `.MuiSwitch-root` | `getByName()`, `getByLabel()` |
 | [TabHarness](#tabharness) | Tab | `.MuiTab-root` | — |
+| [TableBodyHarness](#tablebodyharness) | TableBody | `.MuiTableBody-root` | — |
 | [TableCellHarness](#tablecellharness) | TableCell | `.MuiTableCell-root` | — |
 | [TableContainerHarness](#tablecontainerharness) | TableContainer | `.MuiTableContainer-root` | — |
+| [TableHeadHarness](#tableheadharness) | TableHead | `.MuiTableHead-root` | — |
 | [TablePaginationHarness](#tablepaginationharness) | TablePagination | `.MuiTablePagination-root` | — |
 | [TableRowHarness](#tablerowharness) | TableRow | `.MuiTableRow-root` | — |
 | [TabsHarness](#tabsharness) | Tabs | `.MuiTabs-root` | — |
-| [TextFieldHarness](#textfieldharness) | TextField | `.MuiInputBase-root` | `getByName()` |
+| [TextFieldHarness](#textfieldharness) | TextField | `.MuiInputBase-root` | `getByName()`, `getByLabel()` |
 | [ToggleButtonGroupHarness](#togglebuttongroupharness) | ToggleButtonGroup | `.MuiToggleButtonGroup-root` | — |
 | [ToggleButtonHarness](#togglebuttonharness) | ToggleButton | `.MuiToggleButton-root` | — |
 | [ToolbarHarness](#toolbarharness) | Toolbar | `.MuiToolbar-root` | — |
@@ -133,7 +140,8 @@ All harnesses extend `DomHarness` from `dom-harness`. Every harness inherits the
 
 **Selector:** `.MuiAutocomplete-inputRoot` · **Extends:** TextFieldHarness
 
-Inherits all methods from [TextFieldHarness](#textfieldharness).
+Inherits all methods from [TextFieldHarness](#textfieldharness); the inherited static finders return
+an `AutocompleteHarness`.
 
 ## AvatarHarness
 
@@ -189,6 +197,9 @@ Inherits all methods from [TextFieldHarness](#textfieldharness).
 | `click()` | `Promise<void>` | Click the button |
 | `hover()` | `Promise<void>` | Hover over the button |
 | `isDisabled()` | `boolean` | Whether the button is disabled |
+| `getVariant()` | `'text' \| 'outlined' \| 'contained'` | Button variant |
+| `getColor()` | `'inherit' \| 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'info' \| 'success'` | Button color (matches both the `MuiButton-color<Color>` and `MuiButton-<variant><Color>` class shapes) |
+| `getSize()` | `'small' \| 'medium' \| 'large'` | Button size |
 
 ## CardHarness
 
@@ -207,13 +218,19 @@ Inherits all methods from [TextFieldHarness](#textfieldharness).
 
 | Method | Returns | Description |
 |---|---|---|
+| `getByName(name, container?)` | `CheckboxHarness` | **Static** — find by input name or regex |
+| `getByLabel(text, container?)` | `CheckboxHarness` | **Static** — find by label text or regex |
 | `isChecked()` | `boolean` | Whether the checkbox is checked |
 | `isDisabled()` | `boolean` | Whether the checkbox is disabled |
 | `isIndeterminate()` | `boolean` | Whether the checkbox is indeterminate |
 | `getColor()` | `string` | Checkbox color |
 | `getSize()` | `'small' \| 'medium'` | Checkbox size |
 | `toggle()` | `Promise<void>` | Toggle checked state |
-| `getLabel()` | `string` | Associated label text |
+| `getLabel()` | `string` | Associated `FormControlLabel` text (without the required asterisk) |
+| `getName()` | `string` | Input `name` attribute |
+| `isRequired()` | `boolean` | Input `required`, or the `FormControlLabel` shows an asterisk |
+| `getHelperText()` | `string \| null` | `FormHelperText` of the enclosing `FormControl` |
+| `hasError()` | `boolean` | Label or helper text carries `Mui-error` |
 
 ## ChipHarness
 
@@ -253,6 +270,17 @@ Inherits all methods from [TextFieldHarness](#textfieldharness).
 | `isAnimating()` | `boolean` | Whether currently animating |
 | `getDimensions()` | `{ width, height }` | Element dimensions |
 
+## CollapseHarness
+
+**Selector:** `.MuiCollapse-root` · **Extends:** DomHarness
+
+| Method | Returns | Description |
+|---|---|---|
+| `getByText(text, container?)` | `CollapseHarness` | **Static** — find by text or regex |
+| `isExpanded()` | `boolean` | Whether the collapse has entered (`MuiCollapse-entered`) |
+| `isHidden()` | `boolean` | Whether the collapse is fully collapsed (`MuiCollapse-hidden`) |
+| `getText()` | `string` | Text content (present in the DOM even while collapsed) |
+
 ## DialogHarness
 
 **Selector:** `.MuiDialog-root` · **Extends:** DomHarness
@@ -281,7 +309,10 @@ Inherits all methods from [TextFieldHarness](#textfieldharness).
 | Method | Returns | Description |
 |---|---|---|
 | `getPaperElement()` | `HTMLElement \| null` | Drawer paper container |
-| `getWidth()` | `string \| null` | Drawer width |
+| `getWidth()` | `string \| null` | Paper width: inline style, else computed style (sees `sx` widths) |
+| `getTitle()` | `string` | Text of the first `Typography` in DOM order (a `DialogTitle` when the drawer has one) |
+| `getContentElement()` | `Element \| null` | `DialogContent` element |
+| `getActionsElement()` | `Element \| null` | `DialogActions` element |
 
 ## FabHarness
 
@@ -351,7 +382,8 @@ Inherits all methods from [TextFieldHarness](#textfieldharness).
 | Method | Returns | Description |
 |---|---|---|
 | `getText()` | `string` | Link text |
-| `getHref()` | `string` | `href` attribute |
+| `getHref()` | `string` | `href` attribute (`''` when absent) |
+| `hasHref()` | `boolean` | Whether an `href` attribute is present |
 | `click()` | `Promise<void>` | Click the link |
 
 ## ListItemHarness
@@ -365,6 +397,20 @@ Inherits all methods from [TextFieldHarness](#textfieldharness).
 | `isSelected()` | `boolean` | Whether the item is selected |
 | `isDisabled()` | `boolean` | Whether the item is disabled |
 | `click()` | `Promise<void>` | Click the item |
+| `hasText()` | `boolean` | Whether a `ListItemText` is present |
+| `getPrimaryText()` | `string` | `ListItemText` primary text, or the full text content when there is no `ListItemText` |
+| `hasIcon()` | `boolean` | Whether a `ListItemIcon` is present |
+| `icon` | `IconHarness` | **Getter** — icon inside the `ListItemIcon` (throws if absent) |
+
+## ListSubheaderHarness
+
+**Selector:** `.MuiListSubheader-root` · **Extends:** DomHarness
+
+| Method | Returns | Description |
+|---|---|---|
+| `getByText(text, container?)` | `ListSubheaderHarness` | **Static** — find by text or regex |
+| `getText()` | `string` | Subheader text |
+| `isSticky()` | `boolean` | Whether the subheader is sticky (default; `disableSticky` removes it) |
 
 ## MenuHarness
 
@@ -469,7 +515,8 @@ const title = TypographyHarness.first(card.root);
 | `getDisplayValue()` | `string` | Displayed value text |
 | `getSelectedValue()` | `string` | Selected option's underlying value (hidden input) |
 | `getName()` | `string` | Input name attribute |
-| `getLabel()` | `string` | Associated label text |
+| `getLabel()` | `string` | Associated label text (without the required asterisk) |
+| `isRequired()` | `boolean` | Hidden input `required`, or the label shows an asterisk |
 | `isOptionDisabled(value)` | `boolean` | Whether option with given data-value is disabled (dropdown must be open) |
 | `isDisabled()` | `boolean` | Whether the select is disabled |
 | `isOpen()` | `boolean` | Whether the dropdown is open |
@@ -543,12 +590,18 @@ State is read from the step's `StepLabel`.
 
 | Method | Returns | Description |
 |---|---|---|
+| `getByName(name, container?)` | `SwitchHarness` | **Static** — find by input name or regex |
+| `getByLabel(text, container?)` | `SwitchHarness` | **Static** — find by label text or regex |
 | `isChecked()` | `boolean` | Whether the switch is on |
 | `isDisabled()` | `boolean` | Whether the switch is disabled |
 | `getColor()` | `string` | Switch color |
 | `getSize()` | `'small' \| 'medium'` | Switch size |
 | `toggle()` | `Promise<void>` | Toggle switch state |
-| `getLabel()` | `string` | Associated label text |
+| `getLabel()` | `string` | Associated `FormControlLabel` text (without the required asterisk) |
+| `getName()` | `string` | Input `name` attribute |
+| `isRequired()` | `boolean` | Input `required`, or the `FormControlLabel` shows an asterisk |
+| `getHelperText()` | `string \| null` | `FormHelperText` of the enclosing `FormControl` |
+| `hasError()` | `boolean` | Label or helper text carries `Mui-error` |
 
 ## TabHarness
 
@@ -560,6 +613,15 @@ State is read from the step's `StepLabel`.
 | `isSelected()` | `boolean` | Whether the tab is selected |
 | `isDisabled()` | `boolean` | Whether the tab is disabled |
 | `click()` | `Promise<void>` | Click the tab |
+
+## TableBodyHarness
+
+**Selector:** `.MuiTableBody-root` · **Extends:** DomHarness
+
+| Method | Returns | Description |
+|---|---|---|
+| `getRows()` | `TableRowHarness[]` | Body rows |
+| `getRowCount()` | `number` | Number of body rows |
 
 ## TableCellHarness
 
@@ -575,8 +637,22 @@ State is read from the step's `StepLabel`.
 
 | Method | Returns | Description |
 |---|---|---|
-| `getRows()` | `TableRowHarness[]` | All table rows |
+| `getRows()` | `TableRowHarness[]` | All table rows (head and body) |
 | `getRowCount()` | `number` | Number of rows |
+| `head` | `TableHeadHarness` | **Getter** — the `TableHead` (throws if absent) |
+| `body` | `TableBodyHarness` | **Getter** — the `TableBody` (throws if absent) |
+| `hasHead()` | `boolean` | Whether a `TableHead` is present |
+| `hasBody()` | `boolean` | Whether a `TableBody` is present |
+
+## TableHeadHarness
+
+**Selector:** `.MuiTableHead-root` · **Extends:** DomHarness
+
+| Method | Returns | Description |
+|---|---|---|
+| `getRows()` | `TableRowHarness[]` | Header rows |
+| `getRowCount()` | `number` | Number of header rows |
+| `getHeaderTexts()` | `string[]` | Cell texts of the first header row |
 
 ## TablePaginationHarness
 
@@ -585,6 +661,7 @@ State is read from the step's `StepLabel`.
 | Method | Returns | Description |
 |---|---|---|
 | `getDisplayedRows()` | `string` | Displayed rows text, e.g. `'1–10 of 100'` |
+| `getTotalRowCount()` | `number \| null` | Total parsed from the displayed-rows text (falls back to the root text, so material-react-table's pagination works too; English labels only) |
 | `getRowsPerPage()` | `number` | Current rows-per-page value |
 | `getRowsPerPageOptions()` | `Promise<number[]>` | Available rows-per-page options |
 | `setRowsPerPage(value)` | `Promise<void>` | Select a rows-per-page value (matches by value, so `{ label, value }` options work) |
@@ -622,12 +699,21 @@ State is read from the step's `StepLabel`.
 | Method | Returns | Description |
 |---|---|---|
 | `getByName(name, container?)` | `TextFieldHarness` | **Static** — find by name or regex |
+| `getByLabel(text, container?)` | `TextFieldHarness` | **Static** — find by label text or regex |
 | `type(value)` | `Promise<void>` | Type into the input |
 | `clear()` | `Promise<void>` | Clear the input |
 | `getValue()` | `string` | Current input value |
 | `getName()` | `string` | Input name attribute |
 | `getPlaceholder()` | `string` | Placeholder text |
 | `getType()` | `string` | Input type attribute |
+| `getLabel()` | `string` | Label text without the required asterisk (`''` when unlabeled) |
+| `getHelperText()` | `string \| null` | `FormHelperText` of the enclosing `FormControl` |
+| `hasError()` | `boolean` | Input or helper text carries `Mui-error` |
+| `isDisabled()` | `boolean` | Whether the input is disabled |
+| `isRequired()` | `boolean` | Input `required`, or the label shows an asterisk |
+| `isMultiline()` | `boolean` | Whether the field renders a textarea (`multiline`) |
+| `getStartAdornmentText()` | `string \| null` | Text of the start `InputAdornment` (`null` when absent) |
+| `getEndAdornmentText()` | `string \| null` | Text of the end `InputAdornment` (`null` when absent) |
 
 ## ToggleButtonGroupHarness
 

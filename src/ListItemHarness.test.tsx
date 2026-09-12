@@ -3,7 +3,9 @@ import { vi } from 'vitest';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/Inbox';
 import { ListItemHarness } from './ListItemHarness.js';
 
 describe('ListItemHarness', () => {
@@ -18,6 +20,59 @@ describe('ListItemHarness', () => {
       );
 
       expect(ListItemHarness.first().getText()).toBe('Item one');
+    });
+
+    it('falls back to the full text without ListItemText', () => {
+      render(
+        <List>
+          <ListItem>Plain item</ListItem>
+        </List>
+      );
+
+      expect(ListItemHarness.first().getText()).toBe('Plain item');
+    });
+  });
+
+  describe('hasText / getPrimaryText', () => {
+    it('reports ListItemText on a ListItem', () => {
+      render(
+        <List>
+          <ListItem>
+            <ListItemText primary="Primary" secondary="Secondary" />
+          </ListItem>
+        </List>
+      );
+
+      const item = ListItemHarness.first();
+      expect(item.hasText()).toBe(true);
+      expect(item.getPrimaryText()).toBe('Primary');
+    });
+
+    it('reports ListItemText on a ListItemButton', () => {
+      render(
+        <List>
+          <ListItemButton>
+            <ListItemText primary="Clickable" />
+          </ListItemButton>
+        </List>
+      );
+
+      const item = ListItemHarness.first();
+      expect(item.hasText()).toBe(true);
+      expect(item.getPrimaryText()).toBe('Clickable');
+    });
+
+    it('falls back to the full text without ListItemText', () => {
+      render(
+        <List>
+          <ListItemButton>Plain button</ListItemButton>
+        </List>
+      );
+
+      const item = ListItemHarness.first();
+      expect(item.hasText()).toBe(false);
+      expect(item.getPrimaryText()).toBe('Plain button');
+      expect(item.getText()).toBe('Plain button');
     });
   });
 
@@ -44,6 +99,56 @@ describe('ListItemHarness', () => {
       );
 
       expect(ListItemHarness.first().getSecondaryText()).toBeNull();
+    });
+  });
+
+  describe('hasIcon / icon', () => {
+    it('exposes the icon of a ListItem', () => {
+      render(
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <InboxIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Inbox" />
+          </ListItem>
+        </List>
+      );
+
+      const item = ListItemHarness.first();
+      expect(item.hasIcon()).toBe(true);
+      expect(item.icon.getSize()).toBe('small');
+    });
+
+    it('exposes the icon of a ListItemButton', () => {
+      render(
+        <List>
+          <ListItemButton>
+            <ListItemIcon>
+              <InboxIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText primary="Inbox" />
+          </ListItemButton>
+        </List>
+      );
+
+      const item = ListItemHarness.first();
+      expect(item.hasIcon()).toBe(true);
+      expect(item.icon.getColor()).toBe('primary');
+    });
+
+    it('reports no icon and throws on access when absent', () => {
+      render(
+        <List>
+          <ListItemButton>
+            <ListItemText primary="No icon" />
+          </ListItemButton>
+        </List>
+      );
+
+      const item = ListItemHarness.first();
+      expect(item.hasIcon()).toBe(false);
+      expect(() => item.icon).toThrow(/No icon container/);
     });
   });
 

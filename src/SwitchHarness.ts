@@ -1,4 +1,11 @@
 import { DomHarness } from 'dom-harness';
+import type { HarnessConstructor } from 'dom-harness';
+import {
+  getFormControlHelperText,
+  getFormControlLabelText,
+  hasFormControlHelperError,
+  hasFormControlLabelAsterisk,
+} from './formControlHelpers.js';
 
 type SwitchColor = 'default' | 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success';
 type SwitchSize = 'small' | 'medium';
@@ -6,6 +13,24 @@ type SwitchSize = 'small' | 'medium';
 /** Harness for MUI `<Switch>`. Queries by `MuiSwitch-root` class. */
 export class SwitchHarness extends DomHarness {
   static selector = '.MuiSwitch-root';
+
+  /** Finds a switch whose input name matches `textOrRegexp`. */
+  static getByName<T extends SwitchHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
+    return this.match(textOrRegexp, (h) => h.getName(), container);
+  }
+
+  /** Finds a switch whose `FormControlLabel` text matches `textOrRegexp`. */
+  static getByLabel<T extends SwitchHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
+    return this.match(textOrRegexp, (h) => h.getLabel(), container);
+  }
 
   /** Returns `true` if the switch is toggled on. */
   isChecked(): boolean {
@@ -48,11 +73,40 @@ export class SwitchHarness extends DomHarness {
     await this.user.click(input);
   }
 
-  /** Returns the label text from the parent `FormControlLabel`, or `''` if none. */
+  /** Returns the label text from the parent `FormControlLabel` (without the required asterisk), or `''` if none. */
   getLabel(): string {
-    const label = this.root.closest('.MuiFormControlLabel-root');
-    if (!label) return '';
-    const labelText = label.querySelector('.MuiFormControlLabel-label');
-    return labelText?.textContent || '';
+    return getFormControlLabelText(this.root);
+  }
+
+  /** Returns the input's `name` attribute, or `''` if none. */
+  getName(): string {
+    return this._input?.name || '';
+  }
+
+  /** Returns `true` if the input is required or the parent `FormControlLabel` renders a required asterisk. */
+  isRequired(): boolean {
+    if (this._input?.required) return true;
+
+    return hasFormControlLabelAsterisk(this.root);
+  }
+
+  /** Returns the helper text of the enclosing `FormControl`, or `null` if absent. */
+  getHelperText(): string | null {
+    return getFormControlHelperText(this.root);
+  }
+
+  /** Returns `true` if the parent `FormControlLabel` or the enclosing `FormControl`'s helper text is in the error state. */
+  hasError(): boolean {
+    if (this._formControlLabel?.classList.contains('Mui-error')) return true;
+
+    return hasFormControlHelperError(this.root);
+  }
+
+  get _input(): HTMLInputElement | null {
+    return this.root.querySelector('input');
+  }
+
+  get _formControlLabel(): Element | null {
+    return this.root.closest('.MuiFormControlLabel-root');
   }
 }

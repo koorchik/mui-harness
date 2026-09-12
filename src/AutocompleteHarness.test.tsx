@@ -23,4 +23,20 @@ describe('AutocompleteHarness', () => {
 
     expect(autocomplete.getValue()).toBe('Hello');
   });
+
+  it('keeps the subclass type in inherited static finders', () => {
+    render(
+      <Autocomplete
+        options={['One', 'Two']}
+        renderInput={(params) => <TextField {...params} label="Fruit" name="fruit" />}
+      />
+    );
+
+    const byName: AutocompleteHarness = AutocompleteHarness.getByName('fruit');
+    const byLabel: AutocompleteHarness = AutocompleteHarness.getByLabel('Fruit');
+
+    expect(byName).toBeInstanceOf(AutocompleteHarness);
+    expect(byLabel).toBeInstanceOf(AutocompleteHarness);
+    expect(byName.getLabel()).toBe('Fruit');
+  });
 });

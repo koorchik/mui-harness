@@ -1,4 +1,11 @@
 import { DomHarness } from 'dom-harness';
+import type { HarnessConstructor } from 'dom-harness';
+import {
+  getFormControlHelperText,
+  getFormLabelText,
+  hasFormControlHelperError,
+  hasFormLabelAsterisk,
+} from './formControlHelpers.js';
 import { MenuItemHarness } from './MenuItemHarness.js';
 
 /** Harness for MUI `<Select>`. Queries by `MuiSelect-select` class. */
@@ -6,12 +13,20 @@ export class SelectHarness extends DomHarness {
   static selector = '.MuiSelect-select';
 
   /** Finds a select whose input name matches `textOrRegexp`. */
-  static getByName(textOrRegexp: string | RegExp, container?: Element): SelectHarness {
+  static getByName<T extends SelectHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
     return this.match(textOrRegexp, (h) => h.getName(), container);
   }
 
   /** Finds a select whose label text matches `textOrRegexp`. */
-  static getByLabel(textOrRegexp: string | RegExp, container?: Element): SelectHarness {
+  static getByLabel<T extends SelectHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
     return this.match(textOrRegexp, (h) => h.getLabel(), container);
   }
 
@@ -20,10 +35,9 @@ export class SelectHarness extends DomHarness {
     return this._nativeInput?.name || '';
   }
 
-  /** Returns the associated label text. */
+  /** Returns the associated label text without the required asterisk, or `''` when there is no label. */
   getLabel(): string {
-    const label = this._formControl?.querySelector('.MuiInputLabel-root');
-    return label?.textContent || '';
+    return getFormLabelText(this._formControl?.querySelector('.MuiInputLabel-root'));
   }
 
   /** Returns the currently displayed selected value text. */
@@ -162,25 +176,31 @@ export class SelectHarness extends DomHarness {
     }
 
     // Also check if there's an error helper text
-    return !!this._formControl?.querySelector('.MuiFormHelperText-root.Mui-error');
+    return hasFormControlHelperError(this.root);
   }
 
   /** Returns the helper text below the select, or `null` if absent. */
   getHelperText(): string | null {
-    const helperText = this._formControl?.querySelector('.MuiFormHelperText-root');
-    return helperText?.textContent || null;
+    return getFormControlHelperText(this.root);
   }
 
-  private get _inputBase(): Element | null {
+  /** Returns `true` if the hidden input is required or the label renders a required asterisk. */
+  isRequired(): boolean {
+    if (this._nativeInput?.required) return true;
+
+    return hasFormLabelAsterisk(this.root);
+  }
+
+  get _inputBase(): Element | null {
     return this.root.closest('.MuiInputBase-root');
   }
 
   /** MUI Select stores name and value in a hidden input next to the display element. */
-  private get _nativeInput(): HTMLInputElement | null {
+  get _nativeInput(): HTMLInputElement | null {
     return this._inputBase?.querySelector<HTMLInputElement>('.MuiSelect-nativeInput') ?? null;
   }
 
-  private get _formControl(): Element | null {
+  get _formControl(): Element | null {
     return this.root.closest('.MuiFormControl-root');
   }
 }

@@ -43,9 +43,11 @@ All source lives in `src/`. Flat structure — no subdirectories.
 - State queries as getters/methods: `getText()`, `isDisabled()`, `getValue()`
 - User interactions as async methods: `click()`, `type()`, `toggle()` (via `this.user` from UserEvent)
 - Optional elements use try/catch pattern (method returns boolean)
-- Each harness has a co-located `.test.tsx` file (exceptions: `TableCellHarness`, `TableContainerHarness`, and `TableRowHarness` are tested via `TableHarness.test.tsx`; `StepHarness` via `StepperHarness.test.tsx`)
+- Internal DOM lookups are `_`-prefixed members (`_input`, `_formControl`) — not `private`, so app harnesses can reuse them
+- Logic shared by sibling harnesses lives in a non-harness module (e.g. `src/formControlHelpers.ts`, used by `TextField`/`Select`/`Checkbox`/`Switch`) rather than being copied, so the harnesses cannot drift apart
+- Each harness has a co-located `.test.tsx` file (exceptions: `TableBodyHarness`, `TableCellHarness`, `TableContainerHarness`, `TableHeadHarness` and `TableRowHarness` are tested via `TableHarness.test.tsx`; `StepHarness` via `StepperHarness.test.tsx`)
 
-**Barrel export:** `src/index.ts` re-exports all 48 harnesses, sorted alphabetically. Use `.js` extensions in import paths (NodeNext resolution).
+**Barrel export:** `src/index.ts` re-exports all 52 harnesses, sorted alphabetically. Non-harness modules in `src/` (e.g. `formControlHelpers.ts`) are internal and deliberately not exported. Use `.js` extensions in import paths (NodeNext resolution).
 
 **Portaled components** (Dialog, Snackbar, Menu, Popover, Drawer): These MUI components render outside the normal DOM tree, so their harness finders intentionally omit the `container` argument to search the full document.
 

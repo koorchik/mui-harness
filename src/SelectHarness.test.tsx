@@ -32,6 +32,48 @@ describe('SelectHarness', () => {
     expect(select.getLabel()).toBe('Sort order');
   });
 
+  it('gets the label without the required asterisk', () => {
+    render(
+      <FormControl required>
+        <InputLabel>Country</InputLabel>
+        <Select label="Country" value="ua">
+          <MenuItem value="ua">Ukraine</MenuItem>
+        </Select>
+      </FormControl>
+    );
+
+    expect(SelectHarness.first().getLabel()).toBe('Country');
+    expect(SelectHarness.getByLabel('Country').getValue()).toBe('Ukraine');
+  });
+
+  describe('isRequired', () => {
+    it('returns true when the FormControl is required', () => {
+      render(
+        <FormControl required>
+          <InputLabel>Country</InputLabel>
+          <Select label="Country" value="ua">
+            <MenuItem value="ua">Ukraine</MenuItem>
+          </Select>
+        </FormControl>
+      );
+
+      expect(SelectHarness.first().isRequired()).toBe(true);
+    });
+
+    it('returns false otherwise', () => {
+      render(
+        <FormControl>
+          <InputLabel>Country</InputLabel>
+          <Select label="Country" value="ua">
+            <MenuItem value="ua">Ukraine</MenuItem>
+          </Select>
+        </FormControl>
+      );
+
+      expect(SelectHarness.first().isRequired()).toBe(false);
+    });
+  });
+
   it('can check if select is open or closed', async () => {
     render(
       <Select value="test">

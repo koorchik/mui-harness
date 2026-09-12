@@ -1,4 +1,5 @@
 import { DomHarness } from 'dom-harness';
+import type { HarnessConstructor } from 'dom-harness';
 import { IconHarness } from './IconHarness.js';
 
 /** Harness for MUI `<MenuItem>`. Queries by `MuiMenuItem-root` class. */
@@ -6,7 +7,11 @@ export class MenuItemHarness extends DomHarness {
   static selector = '.MuiMenuItem-root';
 
   /** Finds a menu item whose text matches `textOrRegexp`. */
-  static getByText(textOrRegexp: string | RegExp, container?: Element): MenuItemHarness {
+  static getByText<T extends MenuItemHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
     return this.match(textOrRegexp, (h) => h.getText(), container);
   }
 

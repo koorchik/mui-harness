@@ -33,7 +33,7 @@ The [`examples/login-page`](examples/login-page) directory contains a complete, 
 Full API reference and best practices are included in this package:
 
 - **[Getting Started](docs/GETTING_STARTED.md)** — what harnesses are, why they matter, and how to build your own
-- **[API Reference](docs/API_REFERENCE.md)** — methods and signatures for all 48 harnesses
+- **[API Reference](docs/API_REFERENCE.md)** — methods and signatures for all 52 harnesses
 - **[Best Practices](docs/BEST_PRACTICES.md)** — patterns for writing and composing harnesses
 
 ## Installation
@@ -87,6 +87,7 @@ it('submits the form and shows a success alert', async () => {
 | `CheckboxHarness` | Checkbox | `.MuiCheckbox-root` |
 | `ChipHarness` | Chip | `.MuiChip-root` |
 | `CircularProgressHarness` | CircularProgress | `.MuiCircularProgress-root` |
+| `CollapseHarness` | Collapse | `.MuiCollapse-root` |
 | `DialogHarness` | Dialog | `.MuiDialog-root` |
 | `DividerHarness` | Divider | `.MuiDivider-root` |
 | `DrawerHarness` | Drawer | `.MuiDrawer-root` |
@@ -96,6 +97,7 @@ it('submits the form and shows a success alert', async () => {
 | `LinearProgressHarness` | LinearProgress | `.MuiLinearProgress-root` |
 | `LinkHarness` | Link | `.MuiLink-root` |
 | `ListItemHarness` | ListItem | `.MuiListItem-root` |
+| `ListSubheaderHarness` | ListSubheader | `.MuiListSubheader-root` |
 | `MenuHarness` | Menu | `.MuiMenu-root` |
 | `MenuItemHarness` | MenuItem | `.MuiMenuItem-root` |
 | `PaginationHarness` | Pagination | `.MuiPagination-root` |
@@ -111,8 +113,10 @@ it('submits the form and shows a success alert', async () => {
 | `StepperHarness` | Stepper | `.MuiStepper-root` |
 | `SwitchHarness` | Switch | `.MuiSwitch-root` |
 | `TabHarness` | Tab | `.MuiTab-root` |
+| `TableBodyHarness` | TableBody | `.MuiTableBody-root` |
 | `TableCellHarness` | TableCell | `.MuiTableCell-root` |
 | `TableContainerHarness` | TableContainer | `.MuiTableContainer-root` |
+| `TableHeadHarness` | TableHead | `.MuiTableHead-root` |
 | `TablePaginationHarness` | TablePagination | `.MuiTablePagination-root` |
 | `TableRowHarness` | TableRow | `.MuiTableRow-root` |
 | `TabsHarness` | Tabs | `.MuiTabs-root` |

@@ -34,6 +34,32 @@ describe('TablePaginationHarness', () => {
     });
   });
 
+  describe('getTotalRowCount', () => {
+    it('parses the total from the displayed rows text', () => {
+      render(<Controlled count={1234} />);
+
+      expect(TablePaginationHarness.first().getTotalRowCount()).toBe(1234);
+    });
+
+    it('falls back to the root text when there is no displayedRows element', () => {
+      render(<div className="MuiTablePagination-root">1-25 of 93</div>);
+
+      expect(TablePaginationHarness.first().getTotalRowCount()).toBe(93);
+    });
+
+    it('returns null when no count is shown', () => {
+      render(<div className="MuiTablePagination-root">Rows per page: 25</div>);
+
+      expect(TablePaginationHarness.first().getTotalRowCount()).toBeNull();
+    });
+
+    it('prefers the displayed range over an unrelated "of" in the root text', () => {
+      render(<div className="MuiTablePagination-root">Page 1 of 5 · 1-25 of 93</div>);
+
+      expect(TablePaginationHarness.first().getTotalRowCount()).toBe(93);
+    });
+  });
+
   describe('getRowsPerPage / getRowsPerPageOptions', () => {
     it('returns the current rows per page', () => {
       render(<Controlled />);

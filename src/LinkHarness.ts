@@ -14,6 +14,11 @@ export class LinkHarness extends DomHarness {
     return this.root.getAttribute('href') || '';
   }
 
+  /** Returns `true` if the link has an `href` attribute. */
+  hasHref(): boolean {
+    return this.root.hasAttribute('href');
+  }
+
   /** Clicks the link using UserEvent. */
   click() {
     return this.user.click(this.root);

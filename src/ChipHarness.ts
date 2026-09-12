@@ -1,4 +1,5 @@
 import { DomHarness } from 'dom-harness';
+import type { HarnessConstructor } from 'dom-harness';
 import { IconHarness } from './IconHarness.js';
 
 type ChipVariant = 'filled' | 'outlined';
@@ -10,7 +11,11 @@ export class ChipHarness extends DomHarness {
   static selector = '.MuiChip-root';
 
   /** Finds a chip whose label text matches `textOrRegexp`. */
-  static getByText(textOrRegexp: string | RegExp, container?: Element): ChipHarness {
+  static getByText<T extends ChipHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
     return this.match(textOrRegexp, (h) => h.getLabel(), container);
   }
 

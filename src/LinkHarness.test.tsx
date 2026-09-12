@@ -26,6 +26,20 @@ describe('LinkHarness', () => {
     });
   });
 
+  describe('hasHref', () => {
+    it('returns true when the link has an href', () => {
+      render(<Link href="https://example.com">Example</Link>);
+
+      expect(LinkHarness.first().hasHref()).toBe(true);
+    });
+
+    it('returns false when the link has no href', () => {
+      render(<Link component="button">Button link</Link>);
+
+      expect(LinkHarness.first().hasHref()).toBe(false);
+    });
+  });
+
   describe('click', () => {
     it('triggers onClick when clicked', async () => {
       const handleClick = vi.fn((e) => e.preventDefault());

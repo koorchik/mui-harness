@@ -4,6 +4,50 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [2.1.0] - 2026-09-12
+
+### Added
+
+- New harnesses: `CollapseHarness`, `ListSubheaderHarness`, `TableHeadHarness`, `TableBodyHarness`.
+- `TextFieldHarness`: `getByLabel()`, `getLabel()` (without the required asterisk), `getHelperText()`,
+  `hasError()`, `isDisabled()`, `isRequired()`, `isMultiline()`, `getStartAdornmentText()`,
+  `getEndAdornmentText()` — the same form-control surface `SelectHarness` already had.
+- `CheckboxHarness`: `getByName()`, `getByLabel()`, `getName()`, `isRequired()`, `getHelperText()`,
+  `hasError()`.
+- `ButtonHarness`: `getVariant()`, `getColor()`, `getSize()`.
+- `LinkHarness`: `hasHref()`.
+- `ListItemHarness`: `hasText()`, `getPrimaryText()` (falls back to the full text content, like
+  `MenuItemHarness`), `hasIcon()`, `icon`.
+- `DrawerHarness`: `getTitle()`, `getContentElement()`, `getActionsElement()` (parity with
+  `DialogHarness`).
+- `TableContainerHarness`: `head`, `body`, `hasHead()`, `hasBody()`.
+- `TablePaginationHarness.getTotalRowCount()` — parses the total from the displayed-rows text,
+  falling back to the root's text so material-react-table's pagination (a `Box` carrying only
+  `MuiTablePagination-root`) works too. Parses the default English label; a localized or custom
+  `labelDisplayedRows` returns `null`.
+- `SwitchHarness`: `getByName()`, `getByLabel()`, `getName()`, `isRequired()`, `getHelperText()`,
+  `hasError()` — the same surface as `CheckboxHarness`.
+- `SelectHarness`: `isRequired()`.
+- `CollapseHarness`: `getByText()`.
+
+### Changed
+
+- `DrawerHarness.getWidth()` falls back to the computed style, so widths set through `sx` /
+  `slotProps.paper.sx` are reported instead of `null`.
+- `SelectHarness.getLabel()` strips the asterisk MUI appends to a required field's label, matching
+  `TextFieldHarness.getLabel()`. `SelectHarness.getByLabel('Country')` now finds a required select
+  that previously only matched the label text with a trailing `*`.
+- `SwitchHarness.getLabel()` is documented as excluding the required asterisk (it already did — MUI
+  renders the asterisk outside `MuiFormControlLabel-label`).
+- Every static finder (`getByText()`, `getByName()`, `getByLabel()` on all harnesses) is typed on the
+  calling class, matching `first()` / `all()` / `match()` from `dom-harness`. A subclass now gets its
+  own type back — `AutocompleteHarness.getByName()` returns an `AutocompleteHarness`, and an app's
+  `class SaveButton extends ButtonHarness {}` gets a `SaveButton` from `SaveButton.getByText()`.
+  Calls on the library classes themselves are unaffected.
+- Internal `_`-prefixed harness members are no longer `private` in `SelectHarness`,
+  `TextFieldHarness` and `CheckboxHarness`, matching the rest of the library (they stay internal by
+  naming convention, and app harnesses may now reuse them).
+
 ## [2.0.0] - 2026-09-03
 
 ### Breaking changes

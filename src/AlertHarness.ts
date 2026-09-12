@@ -1,4 +1,5 @@
 import { DomHarness } from 'dom-harness';
+import type { HarnessConstructor } from 'dom-harness';
 import { IconHarness } from './IconHarness.js';
 import { IconButtonHarness } from './IconButtonHarness.js';
 
@@ -10,7 +11,11 @@ export class AlertHarness extends DomHarness {
   static selector = '.MuiAlert-root';
 
   /** Finds an alert whose message text matches `textOrRegexp`. */
-  static getByText(textOrRegexp: string | RegExp, container?: Element): AlertHarness {
+  static getByText<T extends AlertHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
     return this.match(textOrRegexp, (h) => h.getText(), container);
   }
 

@@ -1,4 +1,5 @@
 import { DomHarness } from 'dom-harness';
+import type { HarnessConstructor } from 'dom-harness';
 
 type TypographyVariant =
   | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
@@ -13,7 +14,11 @@ export class TypographyHarness extends DomHarness {
   static selector = '.MuiTypography-root';
 
   /** Finds a typography element whose text matches `textOrRegexp`. */
-  static getByText(textOrRegexp: string | RegExp, container?: Element): TypographyHarness {
+  static getByText<T extends TypographyHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
     return this.match(textOrRegexp, (h) => h.getText(), container);
   }
 

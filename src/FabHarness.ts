@@ -1,4 +1,5 @@
 import { DomHarness } from 'dom-harness';
+import type { HarnessConstructor } from 'dom-harness';
 
 type FabVariant = 'circular' | 'extended';
 type FabSize = 'small' | 'medium' | 'large';
@@ -9,12 +10,20 @@ export class FabHarness extends DomHarness {
   static selector = '.MuiFab-root';
 
   /** Finds a fab whose text content matches `textOrRegexp`. */
-  static getByText(textOrRegexp: string | RegExp, container?: Element): FabHarness {
+  static getByText<T extends FabHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
     return this.match(textOrRegexp, (h) => h.getText(), container);
   }
 
   /** Finds a fab whose `aria-label` matches `textOrRegexp`. */
-  static getByLabel(textOrRegexp: string | RegExp, container?: Element): FabHarness {
+  static getByLabel<T extends FabHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
     return this.match(textOrRegexp, (h) => h.getLabel(), container);
   }
 

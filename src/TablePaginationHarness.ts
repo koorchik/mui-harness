@@ -10,6 +10,28 @@ export class TablePaginationHarness extends DomHarness {
     return this.root.querySelector('.MuiTablePagination-displayedRows')?.textContent || '';
   }
 
+  /**
+   * Returns the total row count parsed from the displayed-rows text (e.g. `100` from `'1–10 of 100'`), or `null`
+   * when no count is shown. Falls back to the root's text when there is no `-displayedRows` element
+   * (material-react-table renders its pagination as a plain `Box` carrying only `MuiTablePagination-root`).
+   *
+   * Parses the default English `labelDisplayedRows`; a localized or custom label returns `null`.
+   */
+  getTotalRowCount(): number | null {
+    return this._parseTotalRowCount(this.getDisplayedRows()) ??
+      this._parseTotalRowCount(this.root.textContent || '');
+  }
+
+  _parseTotalRowCount(text: string): number | null {
+    // Prefer the `<from>–<to> of <total>` shape so an unrelated "page 1 of 5" cannot be mistaken for a total.
+    const ranged = /\d[\d,.\s]*\s*[-–—]\s*\d[\d,.\s]*\s+of\s+(\d[\d,.\s]*\d|\d)/i.exec(text);
+    const match = ranged ?? /\bof\s+(\d[\d,.\s]*\d|\d)/i.exec(text);
+    if (!match) return null;
+
+    const total = parseInt(match[1].replace(/[^\d]/g, ''), 10);
+    return Number.isNaN(total) ? null : total;
+  }
+
   /** Returns the current rows-per-page value (the option's value, not its label). */
   getRowsPerPage(): number {
     return parseInt(this.rowsPerPageSelect.getSelectedValue(), 10);

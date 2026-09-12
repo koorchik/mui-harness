@@ -1,11 +1,16 @@
 import { DomHarness } from 'dom-harness';
+import type { HarnessConstructor } from 'dom-harness';
 
 /** Harness for MUI `<Rating>`. Queries by `MuiRating-root` class. */
 export class RatingHarness extends DomHarness {
   static selector = '.MuiRating-root';
 
   /** Finds a rating whose radio input `name` matches `textOrRegexp`. */
-  static getByName(textOrRegexp: string | RegExp, container?: Element): RatingHarness {
+  static getByName<T extends RatingHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
     return this.match(textOrRegexp, (h) => h.getName(), container);
   }
 

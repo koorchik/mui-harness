@@ -1,6 +1,6 @@
 {
   "name": "mui-harness",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Material UI test harness library built on dom-harness",
   "keywords": [
     "testing",

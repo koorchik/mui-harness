@@ -1,11 +1,16 @@
 import { DomHarness } from 'dom-harness';
+import type { HarnessConstructor } from 'dom-harness';
 
 /** Harness for MUI `<Step>`. Queries by `MuiStep-root` class. State is read from the step's `StepLabel`. */
 export class StepHarness extends DomHarness {
   static selector = '.MuiStep-root';
 
   /** Finds a step whose label matches `textOrRegexp`. */
-  static getByLabel(textOrRegexp: string | RegExp, container?: Element): StepHarness {
+  static getByLabel<T extends StepHarness>(
+    this: HarnessConstructor<T>,
+    textOrRegexp: string | RegExp,
+    container?: Element
+  ): T {
     return this.match(textOrRegexp, (h) => h.getLabel(), container);
   }
 
